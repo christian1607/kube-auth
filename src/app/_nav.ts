@@ -17,12 +17,12 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Cluster Roles',
-        url: '/buttons/buttons',
+        url: '/roles/cluster-roles',
         icon: 'icon-puzzle'
       },
       {
         name: 'Roles',
-        url: '/buttons/dropdowns',
+        url: '/roles/roles',
         icon: 'icon-puzzle'
       }
     ]

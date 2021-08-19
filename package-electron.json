@@ -4,6 +4,7 @@
   "description": "CoreUI Free Angular 11 Admin Template",
   "copyright": "Copyright 2021 creativeLabs Łukasz Holeczek",
   "license": "MIT",
+  "main": "electron/dist/main.js",
   "scripts": {
     "ng": "ng",
     "postinstall": "ngcc --properties es2015 browser module main --first-only",
