@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ClusterRoleList } from '../../../model/cluster-role-list';
+import { ClusterRoleService } from '../../../services/cluster-role.service';
 
 @Component({
   selector: 'app-cluster-role-new',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ClusterRoleNewComponent implements OnInit {
+
+  clusterRoleList: ClusterRoleList;
 
   apigroups = [
     {
@@ -23,9 +27,15 @@ export class ClusterRoleNewComponent implements OnInit {
     {id: 3, name:'Argo CD',resources: [ {name: 'VirtualService', actions: ['GET','PUT','DELETE'] }]}
   ];
 
-  constructor() { }
+  constructor(private clusterRoleService: ClusterRoleService) { }
 
   ngOnInit(): void {
+    this.clusterRoleService.listClusterRoles().subscribe((r)=>{
+      this.clusterRoleList = r.body
+      console.log(this.clusterRoleList)
+    }, (e)=>{
+
+    });
   }
 
 }

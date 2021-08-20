@@ -4,6 +4,8 @@
   "description": "CoreUI Free Angular 11 Admin Template",
   "copyright": "Copyright 2021 creativeLabs Łukasz Holeczek",
   "license": "MIT",
+  "main": "electron/dist/main.js",
+
   "scripts": {
     "ng": "ng",
     "postinstall": "ngcc --properties es2015 browser module main --first-only",
@@ -31,8 +33,10 @@
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.3.1",
     "@coreui/icons": "^2.0.0-rc.0",
     "@coreui/icons-angular": "1.0.0-alpha.3",
+    "@kubernetes/client-node": "^0.15.1",
     "bootstrap": "^4.6.0",
     "chart.js": "^2.9.4",
+    "child_process": "^1.0.2",
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.9.1",
     "flag-icon-css": "^3.5.0",
@@ -55,7 +59,7 @@
     "@types/electron": "^1.6.10",
     "@types/jasmine": "^3.6.6",
     "@types/jasminewd2": "^2.0.8",
-    "@types/node": "^14.14.33",
+    "@types/node": "^14.17.10",
     "codelyzer": "^6.0.0",
     "electron": "^13.2.1",
     "jasmine-core": "~3.6.0",

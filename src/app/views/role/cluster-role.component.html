@@ -25,13 +25,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Samppa Nori</td>
-                  <td>2012/01/01</td>
+                <tr *ngFor="let cr of clusterRoleList.items">
+                  <td> {{ cr.metadata.name }}</td>
+                  <td> {{ cr.metadata.creationTimestamp }}</td>
                   <td>
                    
                       <button type="button" class="btn btn-sm btn-pill btn-success">
-                        <a style="text-decoration: none; color: none" href="#/roles/cluster-roles/new" >
+                        <a style="text-decoration: none" href="#/roles/cluster-roles/new" >
                           <i class="fa fa-pencil"></i> Edit &nbsp;&nbsp;
                         </a>
                       </button>
