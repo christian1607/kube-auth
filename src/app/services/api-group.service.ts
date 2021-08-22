@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ClusterRole } from '../model/cluster-role';
-import { ClusterRoleList } from '../model/cluster-role-list';
+import { ApiGroupList } from '../model/api-group-list';
+import { ApiResourceList } from '../model/api-resource-list';
 
 
 const API_BASE='https://192.168.0.110:6443'
@@ -14,30 +14,30 @@ const headers = new HttpHeaders()
 @Injectable({
   providedIn: 'root'
 })
-export class ClusterRoleService {
+export class ApiGroupService {
 
   constructor(private http:HttpClient) { 
 
   }
 
-  listClusterRoles(): Observable<HttpResponse<ClusterRoleList>> {
+  listClusterRoles(): Observable<HttpResponse<ApiGroupList>> {
 
-    return this.http.get<ClusterRoleList>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/clusterroles',
+    return this.http.get<ApiGroupList>(API_BASE+'/apis/',
         {headers,observe: 'response'}
       );
   }
 
-  createClusterRole(clusterRole:ClusterRole): Observable<HttpResponse<ClusterRole>> {
-    return this.http.post<ClusterRole>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/clusterroles',
-      clusterRole,
-      {headers,observe: 'response'}
+  listResources(groupVersion: string): Observable<HttpResponse<ApiResourceList>> {
+
+    return this.http.get<ApiResourceList>(API_BASE+'/apis/'+groupVersion,
+        {headers,observe: 'response'}
       );
   }
 
-  updateClusterRole(name: string, clusterRole:ClusterRole): Observable<HttpResponse<ClusterRole>> {
-    return this.http.put<ClusterRole>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/clusterroles/'+name,
-      clusterRole,
-      {headers,observe: 'response'}
+  listResourcesV1(): Observable<HttpResponse<ApiResourceList>> {
+
+    return this.http.get<ApiResourceList>(API_BASE+'/api/v1',
+        {headers,observe: 'response'}
       );
   }
 }
