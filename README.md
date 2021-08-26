@@ -7,7 +7,7 @@ Kube-auth is an open source desktop app to manage authentication and authorizati
 The idea of this project is to have an application which allows kubernetes administrator to manage access and authorization in an easy and less-complex way, all the functionality is based on what kubernetes supports thus there is no need to install an custom operator or controller, for authorization we use RBAC model by invoking the API and for authentication is currently managed by x509 certs authentication.
 
 
-## Kuberentes Supported
+## Kubernetes Supported
 
 The application has been tested with the following kubernetes flavors:
 
