@@ -11,8 +11,8 @@ The idea of this project is to have an application which allows kubernetes admin
 
 The application has been tested with the following kubernetes flavors:
 
-* RKE (Rancher Kubernetes Engine)
-* Kubernetes kubeadm
+* RKE (Rancher Kubernetes Engine) 1.19
+* Kubernetes kubeadm 1.22
 
 
 #### Prerequisites
