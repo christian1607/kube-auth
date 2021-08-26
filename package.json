@@ -1,8 +1,7 @@
 {
-  "name": "@coreui/coreui-free-angular-admin-template",
-  "version": "2.11.2",
-  "description": "CoreUI Free Angular 11 Admin Template",
-  "copyright": "Copyright 2021 creativeLabs Łukasz Holeczek",
+  "name": "@caltamirano/kube-auth",
+  "version": "0.0.1",
+  "description": "Kubernetes Authorization and Authentication Desktop",
   "license": "MIT",
   "main": "electron/dist/main.js",
 

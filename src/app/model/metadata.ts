@@ -4,7 +4,7 @@ export class Metadata {
 
     annotations: Object;
     creationTimestamp: string;
-    name: Object;
+    name: string;
     namespace: string;
     labels: Object;
 

@@ -5,6 +5,7 @@ import { ApiResource } from '../../../model/api-resource';
 import { ApiResourceAction } from '../../../model/api-resource-action';
 import { ClusterRole } from '../../../model/cluster-role';
 import { GroupVersion } from '../../../model/group-version';
+import { PolicyRules } from '../../../model/policy-rules';
 import { ApiGroupService } from '../../../services/api-group.service';
 import { ClusterRoleService } from '../../../services/cluster-role.service';
 
@@ -20,25 +21,6 @@ export class ClusterRoleNewComponent implements OnInit {
   apiGroupResourcesTmp:  ApiGroupResource[] = []
   clusterRole: ClusterRole=new ClusterRole();
  
-  apigroups = [
-    {
-      id: 1, 
-      name:'Kubernetes Core', 
-      resources: [ 
-        {name: 'Pod', actions: [{verb:'list',selected: true},{verb:'update',selected: true},{verb:'delete',selected: true}]},
-        {name: 'Deployment', actions: [{verb:'list',selected: true},{verb:'update',selected: false}] }
-    
-      ]
-    },
-    {
-      id: 2, 
-      name:'Istio',
-      resources: [ 
-        {name: 'VirtualService', actions: [{verb:'list',selected: true},{verb:'update',selected: false}]}
-      ]
-    }
-  ];
-
   constructor(private clusterRoleService: ClusterRoleService, private apiGroupService: ApiGroupService) { }
 
   async ngOnInit(){
@@ -108,7 +90,24 @@ export class ClusterRoleNewComponent implements OnInit {
 
     console.log(form)
     console.log(this.clusterRole)
-    console.log(this.apigroups)
+
+
+    this.apiGroupResources.forEach(apires=>{
+      var group = apires.group
+      apires.resources.forEach(res=>{
+        
+        var pr = new PolicyRules();
+        pr.apiGroups.push(group);
+        pr.resources.push(res.name);
+        res.actions.filter(a=> a.selected==true).map(a=>a.verb).forEach(a=>{
+          pr.verbs.push(a);
+        })
+
+        this.clusterRole.rules.push(pr);
+      })
+    })
+
+    this.clusterRoleService.createClusterRole(this.clusterRole);
   }
 
 }
