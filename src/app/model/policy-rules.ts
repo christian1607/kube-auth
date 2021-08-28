@@ -5,6 +5,14 @@ export class PolicyRules {
     resourceNames: String[];
     resources: String[];
     verbs: String[];
+
+    constructor(){
+        this.apiGroups=[]
+        this.nonResourceURLs=[]
+        this.resourceNames=[]
+        this.resources=[]
+        this.verbs=[]
+    }
 }
 
 

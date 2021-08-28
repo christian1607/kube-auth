@@ -40,4 +40,16 @@ export class ClusterRoleService {
       {headers,observe: 'response'}
       );
   }
+
+  getClusterRole(name: string): Observable<HttpResponse<ClusterRole>> {
+    return this.http.get<ClusterRole>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/clusterroles/'+name,
+      {headers,observe: 'response'}
+      );
+  }
+
+  deleteClusterRole(name: string): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/clusterroles/'+name,
+      {headers,observe: 'response'}
+      );
+  }
 }

@@ -28,16 +28,11 @@
                 <tr *ngFor="let cr of clusterRoleList.items">
                   <td> {{ cr.metadata.name }}</td>
                   <td> {{ cr.metadata.creationTimestamp }}</td>
-                  <td>
-                   
-                      <button type="button" class="btn btn-sm btn-pill btn-success">
-                        <a style="text-decoration: none" href="#/roles/cluster-roles/new" >
-                          <i class="fa fa-pencil"></i> Edit &nbsp;&nbsp;
-                        </a>
-                      </button>
-                    
-                    
-                    <button type="button" class="btn btn-sm btn-pill btn-danger">
+                  <td>            
+                    <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(cr.metadata.name)"> 
+                        <i class="fa fa-pencil"></i> Edit &nbsp;&nbsp;            
+                    </button>
+                    <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openConfirmationModal(cr.metadata.name)">
                       <i class="fa fa-trash"></i> Delete
                     </button>
                   </td>
@@ -61,6 +56,26 @@
       <!--/.col-->
     </div>
     <!--/.row-->
+
+    <div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Confirmation</h4>
+            <button type="button" class="close" (click)="deleteModal.hide()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure to delete this cluster role? (this action may affect users or groups who has this role assigned)</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="deleteModal.hide()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="deleteClusterRole()">Yes, I'm sure</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
   </div>
   

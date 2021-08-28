@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotifierService } from 'angular-notifier';
 import { ApiGroupList } from '../../../model/api-group-list';
 import { ApiGroupResource } from '../../../model/api-group-resource';
 import { ApiResource } from '../../../model/api-resource';
@@ -21,10 +22,13 @@ export class ClusterRoleNewComponent implements OnInit {
   apiGroupResourcesTmp:  ApiGroupResource[] = []
   clusterRole: ClusterRole=new ClusterRole();
  
-  constructor(private clusterRoleService: ClusterRoleService, private apiGroupService: ApiGroupService) { }
+  constructor(private clusterRoleService: ClusterRoleService, 
+    private apiGroupService: ApiGroupService,
+    private notifierService: NotifierService) { }
 
   async ngOnInit(){
     
+
     await this.getAllClusterResources();
     this.apiGroupResources = this.apiGroupResourcesTmp
     console.log(this.apiGroupResources)
@@ -90,24 +94,37 @@ export class ClusterRoleNewComponent implements OnInit {
 
     console.log(form)
     console.log(this.clusterRole)
+    this.clusterRole.rules =[]
+    if (this.clusterRole.metadata.name){
+      this.apiGroupResources.forEach(apires=>{
+        var group = apires.group
+        apires.resources.forEach(res=>{
+          
+          var pr = new PolicyRules();
+          pr.apiGroups.push(group);
+          pr.resources.push(res.name);
+          
+          
+          res.actions.filter(a=> a.selected==true).map(a=>a.verb).forEach(a=>{
+            pr.verbs.push(a);
+          })
 
-
-    this.apiGroupResources.forEach(apires=>{
-      var group = apires.group
-      apires.resources.forEach(res=>{
-        
-        var pr = new PolicyRules();
-        pr.apiGroups.push(group);
-        pr.resources.push(res.name);
-        res.actions.filter(a=> a.selected==true).map(a=>a.verb).forEach(a=>{
-          pr.verbs.push(a);
+          if (pr.verbs.length > 0){
+            this.clusterRole.rules.push(pr);
+          }
         })
-
-        this.clusterRole.rules.push(pr);
       })
-    })
-
-    this.clusterRoleService.createClusterRole(this.clusterRole);
+  
+      this.clusterRoleService.createClusterRole(this.clusterRole).subscribe(r=>{
+        if (r.ok){
+          this.notifierService.notify('success','Cluster role '+this.clusterRole.metadata.name + ' was created.')
+        }else{
+          this.notifierService.notify('warning',r.status.toString())
+        }
+      });
+    }else{
+      this.notifierService.notify('warning','A cluster name must be define.')
+    }
   }
 
 }

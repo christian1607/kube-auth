@@ -7,6 +7,7 @@ import { ClusterRoleNewComponent } from './cluster-role-new/cluster-role-new.com
 import { ClusterRoleComponent } from './cluster-role.component';
 import { FormsModule } from '@angular/forms';
 
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    RoleRoutingModule
+    RoleRoutingModule,
+    ModalModule.forRoot()
+
   ]
 })
 export class RoleModule { }
