@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ClusterRoleList } from '../../model/cluster-role-list';
 import { ClusterRoleService } from '../../services/cluster-role.service';
-import { NotifierService } from 'angular-notifier';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class ClusterRoleComponent implements OnInit {
   constructor(private clusterRoleService: ClusterRoleService, 
     private route: ActivatedRoute,
     private router: Router,
-    private notifierService: NotifierService) { }
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.clusterRoleService.listClusterRoles().subscribe((r)=>{      
@@ -34,7 +34,7 @@ export class ClusterRoleComponent implements OnInit {
         }
       })
       }, (e)=>{
-        console.error('an error has occur trying to fetch cluster roles', e)
+        this.toastr.error('An error has occur trying to fetch cluster roles.')
     });
   }
 
@@ -59,16 +59,16 @@ export class ClusterRoleComponent implements OnInit {
       this.clusterRoleService.deleteClusterRole(this.clusterRoleToDelete).subscribe((r)=>{
         if (r.ok){
           this.deleteModal.hide()
-          this.notifierService.notify('success','cluster role deleted succesfully.')
+          this.toastr.success('cluster role deleted succesfully.')
         }
-        this.notifierService.notify('danger','An error ocurred trying to delete the cluster role.')
+        this.toastr.error('An error ocurred trying to delete the cluster role.')
 
       }, (e)=>{
-        console.error('an error has occur trying to fetch cluster roles', e)
+        this.toastr.error('An error ocurred trying to delete the cluster role.')
     });
     }
 
-    this.notifierService.notify('warning','no cluster role to be deleted was specified.')
+    this.toastr.warning('no cluster role to be deleted was specified.')
     
   }
 

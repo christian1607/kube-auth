@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
+import { ToastrService } from 'ngx-toastr';
 import { ApiGroupList } from '../../../model/api-group-list';
 import { ApiGroupResource } from '../../../model/api-group-resource';
 import { ApiResource } from '../../../model/api-resource';
@@ -24,7 +25,7 @@ export class ClusterRoleNewComponent implements OnInit {
  
   constructor(private clusterRoleService: ClusterRoleService, 
     private apiGroupService: ApiGroupService,
-    private notifierService: NotifierService) { }
+    private toastr: ToastrService) { }
 
   async ngOnInit(){
     
@@ -117,13 +118,13 @@ export class ClusterRoleNewComponent implements OnInit {
   
       this.clusterRoleService.createClusterRole(this.clusterRole).subscribe(r=>{
         if (r.ok){
-          this.notifierService.notify('success','Cluster role '+this.clusterRole.metadata.name + ' was created.')
+          this.toastr.success('Cluster role '+this.clusterRole.metadata.name + ' was created.')
         }else{
-          this.notifierService.notify('warning',r.status.toString())
+          this.toastr.warning(r.status.toString())
         }
       });
     }else{
-      this.notifierService.notify('warning','A cluster name must be define.')
+      this.toastr.warning('A cluster name must be define.')
     }
   }
 

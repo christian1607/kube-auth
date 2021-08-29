@@ -10,10 +10,12 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
-import { NotifierModule } from 'angular-notifier';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
+
+import { ToastrModule } from 'ngx-toastr';
+
 
 import { AppComponent } from './app.component';
 
@@ -46,6 +48,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -64,7 +67,11 @@ import { ChartsModule } from 'ng2-charts';
     IconModule,
     IconSetModule.forRoot(),
     HttpClientModule,
-    NotifierModule
+    ToastrModule.forRoot({
+      timeOut: 7000,
+      maxOpened: 3,
+      
+    }),
   ],
   declarations: [
     AppComponent,
