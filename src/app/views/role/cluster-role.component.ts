@@ -4,6 +4,8 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ClusterRoleList } from '../../model/cluster-role-list';
 import { ClusterRoleService } from '../../services/cluster-role.service';
 import { ToastrService } from 'ngx-toastr';
+import { timeout } from 'rxjs/operators';
+
 
 
 @Component({
@@ -24,18 +26,21 @@ export class ClusterRoleComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.clusterRoleService.listClusterRoles().subscribe((r)=>{      
-      this.clusterRoleList.apiVersion = r.body.apiVersion
-      this.clusterRoleList.kind = r.body.kind
-      this.clusterRoleList.items = []
-      r.body.items.forEach(cr=>{
-        if(!cr.metadata.name.startsWith('system:')){
-          this.clusterRoleList.items.push(cr)
-        }
-      })
+    this.clusterRoleService.listClusterRoles()
+      .pipe(timeout(5000))
+      .subscribe((r)=>{      
+        this.clusterRoleList.apiVersion = r.body.apiVersion
+        this.clusterRoleList.kind = r.body.kind
+        this.clusterRoleList.items = []
+        r.body.items.forEach(cr=>{
+          if(!cr.metadata.name.startsWith('system:')){
+            this.clusterRoleList.items.push(cr)
+          }
+        })
       }, (e)=>{
         this.toastr.error('An error has occur trying to fetch cluster roles.')
-    });
+      }
+    );
   }
 
   goToEdit(clusterRole: string){
@@ -44,6 +49,12 @@ export class ClusterRoleComponent implements OnInit {
       queryParams: {
         clusterrole: clusterRole
       },
+      relativeTo: this.route
+    })
+  }
+
+  goToCreate(){
+    this.router.navigate(['new'],{
       relativeTo: this.route
     })
   }
@@ -59,16 +70,23 @@ export class ClusterRoleComponent implements OnInit {
       this.clusterRoleService.deleteClusterRole(this.clusterRoleToDelete).subscribe((r)=>{
         if (r.ok){
           this.deleteModal.hide()
+          //this.clusterRoleList.items=this.clusterRoleList.items.filter(i=>{i.metadata.name!==this.clusterRoleToDelete})
+          console.log(this.clusterRoleList.items.filter(i=>{i.metadata.name!=this.clusterRoleToDelete}))
+  
           this.toastr.success('cluster role deleted succesfully.')
+        }else{
+          this.toastr.error('An error ocurred trying to delete the cluster role.')
         }
-        this.toastr.error('An error ocurred trying to delete the cluster role.')
+        
 
       }, (e)=>{
         this.toastr.error('An error ocurred trying to delete the cluster role.')
     });
+    }else{
+      this.toastr.warning('no cluster role to be deleted was specified.')
     }
 
-    this.toastr.warning('no cluster role to be deleted was specified.')
+    
     
   }
 

@@ -15,6 +15,7 @@
                                     id="clusterrole-name" 
                                     name="clusterrole-name" 
                                     class="form-control"
+                                    [disabled]="isEditClusterRole"
                                     [(ngModel)]="clusterRole.metadata.name"
                                     placeholder="name of the cluster role">
                             </div>
@@ -35,20 +36,22 @@
                                         <tr *ngFor="let resource of ag.resources ; index as ri">
                                             <td> {{ resource.name }}</td>
                                             <td>
-                                                <div class="form-check form-check-inline mr-1"
-                                                    *ngFor="let action of resource.actions ; index as ai">
-                                                    <input class="form-check-input" 
-                                                        type="checkbox"
-                                                        id="clusterrole-actions-{{ag.group}}-{{resource.name }}-{{action.verb}}"
-                                                        value="true" 
-                                                        [checked]="apiGroupResources[agi].resources[ri].actions[ai].selected == 'true'"
-                                                        [(ngModel)]="apiGroupResources[agi].resources[ri].actions[ai].selected"
-                                                        name="actions-{{resource.name }}-{{action.verb}}" >
-                                                    <label class="form-check-label" 
-                                                        for="clusterrole-actions-{{ag.group}}-{{resource.name }}-{{action.verb}}">
-                                                        {{action.verb}}
+                                                <div class="form-check form-check-inline mr-2" *ngFor="let action of resource.actions ; index as ai" >
+                                                    <label class="switch switch-sm switch-label switch-pill switch-primary">
+                                                        <input type="checkbox" 
+                                                            class="switch-input" 
+                                                            id="clusterrole-actions-{{ag.group}}-{{resource.name }}-{{action.verb}}"
+                                                            value="true" 
+                                                            [(ngModel)]="apiGroupResources[agi].resources[ri].actions[ai].selected"
+                                                            name="clusterrole2-actions-{{ag.group}}-{{resource.name }}-{{action.verb}}"
+                                                            [checked]="apiGroupResources[agi].resources[ri].actions[ai].selected == 'true'">
+                                                        <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                                        
                                                     </label>
+                                                    {{action.verb}}
                                                 </div>
+                                               
+                                               
                                             </td>
                                         </tr>
                                     </tbody>
@@ -57,9 +60,9 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i>
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="icon-paper-plane"></i>
                             Submit</button>
-                        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+                        <button type="reset" class="btn btn-sm btn-danger"><i class="icon-action-undo"></i> Reset</button>
                     </div>
                 </form>
             </div>

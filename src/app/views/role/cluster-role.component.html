@@ -1,11 +1,9 @@
 <div class="animated fadeIn">
     <div class="row align-items-center">
         <div class="col-xl-2">
-          <a href="#/roles/cluster-roles/new">
-            <button type="button"  class="btn btn-block btn-success">
-                <i class="fa fa-plus"></i> New Cluster Role    
-            </button>
-          </a>  
+          <button type="button"  class="btn btn-block btn-success" (click)="goToCreate()">
+              <i class="icon-plus"></i> New Cluster Role    
+          </button>
         </div>
     </div>
     <br/>
@@ -30,10 +28,10 @@
                   <td> {{ cr.metadata.creationTimestamp }}</td>
                   <td>            
                     <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(cr.metadata.name)"> 
-                        <i class="fa fa-pencil"></i> Edit &nbsp;&nbsp;            
+                      <i class="icon-pencil"></i> Edit &nbsp;&nbsp;            
                     </button>
                     <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openConfirmationModal(cr.metadata.name)">
-                      <i class="fa fa-trash"></i> Delete
+                      <i class="icon-trash"></i>Delete
                     </button>
                   </td>
                 </tr>
