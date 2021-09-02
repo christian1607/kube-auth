@@ -44,49 +44,6 @@ export class ClusterRoleNewComponent implements OnInit {
       
   }
 
-  completeFormToEdit(_clusterRole:string){
-      this.clusterRoleService.getClusterRole(_clusterRole).subscribe(c=>{
-        this.clusterRole.metadata.name=c.body.metadata.name
-        c.body.rules.forEach(rule=>{
-          rule.apiGroups.forEach(ag=>{
-            rule.resources.forEach(r=>{    
-              this.apiGroupResources.forEach(agt=>{
-                
-                console.log(ag + " - "+ agt.group)
-                if (ag=="" && agt.group=="v1"){
-                  console.log(ag)
-                  agt.resources.forEach(rt=>{
-                    if (rt.name==r){
-                      rt.actions.forEach(act=>{
-                        if(rule.verbs.includes(act.verb)){
-                          act.selected=true
-                        } 
-                      })
-                    }                    
-                  }) 
-                } else if (agt.group==ag){
-
-                  agt.resources.forEach(rt=>{
-                    if (rt.name==r){
-                      rt.actions.forEach(act=>{
-                        if(rule.verbs.includes(act.verb)){
-                          act.selected=true
-                        } 
-                      })
-                    }                    
-                  })      
-                } 
-              })
-              
-            })
-          })
-        })
-      })
-      
-      this.isEditClusterRole=true
-
-  }
-
   async  getAllClusterResources(isEdit:boolean,_clusterRole:string){
 
 
