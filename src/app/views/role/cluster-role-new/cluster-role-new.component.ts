@@ -51,7 +51,20 @@ export class ClusterRoleNewComponent implements OnInit {
           rule.apiGroups.forEach(ag=>{
             rule.resources.forEach(r=>{    
               this.apiGroupResources.forEach(agt=>{
-                if (agt.group==ag){
+                
+                console.log(ag + " - "+ agt.group)
+                if (ag=="" && agt.group=="v1"){
+                  console.log(ag)
+                  agt.resources.forEach(rt=>{
+                    if (rt.name==r){
+                      rt.actions.forEach(act=>{
+                        if(rule.verbs.includes(act.verb)){
+                          act.selected=true
+                        } 
+                      })
+                    }                    
+                  }) 
+                } else if (agt.group==ag){
 
                   agt.resources.forEach(rt=>{
                     if (rt.name==r){
@@ -130,7 +143,18 @@ export class ClusterRoleNewComponent implements OnInit {
             rule.apiGroups.forEach(ag=>{
               rule.resources.forEach(r=>{    
                 this.apiGroupResources.forEach(agt=>{
-                  if (agt.group==ag){
+                  if (ag=="" && agt.group=="v1"){
+                    console.log(ag)
+                    agt.resources.forEach(rt=>{
+                      if (rt.name==r){
+                        rt.actions.forEach(act=>{
+                          if(rule.verbs.includes(act.verb)){
+                            act.selected=true
+                          } 
+                        })
+                      }                    
+                    }) 
+                  } else if (agt.group==ag){
                     agt.resources.forEach(rt=>{
                       if (rt.name==r){
                         rt.actions.forEach(act=>{
@@ -172,7 +196,7 @@ export class ClusterRoleNewComponent implements OnInit {
         apires.resources.forEach(res=>{
           
           var pr = new PolicyRules();
-          pr.apiGroups.push(group);
+          pr.apiGroups.push(group=="v1"?"":group);
           pr.resources.push(res.name);
           
           
