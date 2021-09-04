@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ClusterRole } from '../model/cluster-role';
 import { Role } from '../model/role';
 import { RoleList } from '../model/role-list';
 import {environment} from '../../environments/environment';
@@ -12,7 +11,7 @@ const headers = environment.headers
 @Injectable({
   providedIn: 'root'
 })
-export class ClusterRoleService {
+export class RoleService {
 
   constructor(private http:HttpClient) { 
 

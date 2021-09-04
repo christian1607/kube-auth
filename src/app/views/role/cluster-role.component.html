@@ -19,7 +19,7 @@
                 <tr>
                   <th>Name</th>
                   <th>Date registered</th>
-                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -27,11 +27,11 @@
                   <td> {{ cr.metadata.name }}</td>
                   <td> {{ cr.metadata.creationTimestamp }}</td>
                   <td>            
-                    <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(cr.metadata.name)"> 
-                      <i class="icon-pencil"></i> Edit &nbsp;&nbsp;            
+                    <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(cr.metadata.name,cr.metadata.namespace)"> 
+                      <i class="icon-pencil"></i> &nbsp;&nbsp; Edit            
                     </button>
                     <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openConfirmationModal(cr.metadata.name)">
-                      <i class="icon-trash"></i>Delete
+                      <i class="icon-trash"></i> &nbsp;&nbsp; Delete
                     </button>
                   </td>
                 </tr>

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RoleComponent } from './role.component';
 import { ClusterRoleComponent } from './cluster-role.component';
 import { ClusterRoleNewComponent } from './cluster-role-new/cluster-role-new.component';
+import { RoleNewComponent } from './role-new/role-new.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,13 @@ const routes: Routes = [
         component: RoleComponent,
         data: {
           title: 'Namespace Roles'
+        }
+      },
+      {
+        path: 'roles/new',
+        component: RoleNewComponent,
+        data: {
+          title: 'Create/Edit Roles'
         }
       },
       {
