@@ -6,7 +6,12 @@ import * as url from 'url';
 // Inicializamos la ventana de Electron
 let win: BrowserWindow;
 function createWindow() {
-    win = new BrowserWindow({ width: 800, height: 600, title: "Kube-Auth" });
+    win = new BrowserWindow({
+         width: 800, 
+         height: 600, 
+         title: "Kube-Auth",
+         icon: path.join(__dirname, `/../../dist/kube-auth/assets/logo.icns`)
+        });
 
     win.loadURL(
         url.format({

@@ -9,8 +9,8 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label" for="text-input">Name</label>
-                            <div class="col-md-10">
+                            <label class="col-md-2 col-form-label" for="role-name">Name:</label>
+                            <div class="col-md-3">
                                 <input type="text" 
                                     id="role-name" 
                                     name="role-name" 
@@ -19,6 +19,15 @@
                                     [(ngModel)]="role.metadata.name"
                                     placeholder="name of the cluster role">
                             </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="role-ns">Namespace:</label>
+                            <div class="col-md-3">
+                                <select id="role-ns" name="role-ns" [(ngModel)]="role.metadata.namespace"  class="form-control form-control-md" required [disabled]="isEditRole"> 
+                                    <option value="">-- Please select --</option>
+                                    <option *ngFor="let ns of namespaceList.items" [value]="ns.metadata.name">{{ns.metadata.name}}</option>          
+                                </select>
+                            </div>     
                         </div>
                         <div class="card card-accent-primary" *ngFor="let ag of apiGroupResources; index as agi">
                             <div class="card-header">

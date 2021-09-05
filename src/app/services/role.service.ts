@@ -24,33 +24,33 @@ export class RoleService {
   }
 
   listRoles(namespace:string): Observable<HttpResponse<RoleList>> {
-    return this.http.get<RoleList>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespace/'+namespace +'/roles',
+    return this.http.get<RoleList>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+namespace +'/roles',
         {headers,observe: 'response'}
       );
   }
 
   getRole(namespace:string, name: string): Observable<HttpResponse<Role>> {
-    return this.http.get<Role>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespace/'+namespace +'/roles/'+name,
+    return this.http.get<Role>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+namespace +'/roles/'+name,
       {headers,observe: 'response'}
       );
   }
 
   createRole(namespace:string, role:Role): Observable<HttpResponse<Role>> {
-    return this.http.post<Role>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespace/'+namespace +'/roles',
+    return this.http.post<Role>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+namespace +'/roles',
       role,
       {headers,observe: 'response'}
       );
   }
 
   updateRole(name: string,namespace:string, role:Role): Observable<HttpResponse<Role>> {
-    return this.http.put<Role>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespace/'+namespace +'/roles/'+name,
+    return this.http.put<Role>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+namespace +'/roles/'+name,
       role,
       {headers,observe: 'response'}
       );
   }
 
   deleteRole(name: string,namespace:string): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespace/'+namespace +'/roles/'+name,
+    return this.http.delete<any>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+namespace +'/roles/'+name,
       {headers,observe: 'response'}
       );
   }

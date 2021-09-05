@@ -2,23 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ApiGroupList } from '../../../model/api-group-list';
 import { ApiGroupResource } from '../../../model/api-group-resource';
-import { ApiResource } from '../../../model/api-resource';
 import { ApiResourceAction } from '../../../model/api-resource-action';
-import { ClusterRole } from '../../../model/cluster-role';
 import { GroupVersion } from '../../../model/group-version';
 import { PolicyRules } from '../../../model/policy-rules';
 import { ApiGroupService } from '../../../services/api-group.service';
-import { ClusterRoleService } from '../../../services/cluster-role.service';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 import { Role } from '../../../model/role';
 import { RoleService } from '../../../services/role.service';
+import { NamespaceList } from '../../../model/namespace-list';
+import { timeout } from 'rxjs/operators';
+import { NamespaceService } from '../../../services/namespace.service';
 
 
 @Component({
   selector: 'app-role-new',
   templateUrl: './role-new.component.html',
-  styleUrls: ['./role-new.component.scss']
 })
 
 export class RoleNewComponent implements OnInit {
@@ -28,8 +26,11 @@ export class RoleNewComponent implements OnInit {
   apiGroupResourcesTmp:  ApiGroupResource[] = []
   role: Role=new Role();
   private isEditRole: boolean =false
+  filterNamespace: string
+  namespaceList: NamespaceList = new NamespaceList();
  
   constructor(private roleService: RoleService, 
+    private namespaceService: NamespaceService, 
     private apiGroupService: ApiGroupService,
     private toastr: ToastrService,
     private route: ActivatedRoute) { }
@@ -41,13 +42,15 @@ export class RoleNewComponent implements OnInit {
     var cr = this.route.snapshot.queryParamMap.get('role')
     var ns = this.route.snapshot.queryParamMap.get('namespace')
 
-    if (cr){
+    this.listNamespaces();
+
+    if (cr && ns){
       this.isEditRole=true
       await this.getAllClusterResources(true,cr,ns);
     }else{
       await this.getAllClusterResources(false,cr,null);
-    }
-      
+    }  
+  
   }
 
   async  getAllClusterResources(isEdit:boolean,_clusterRole:string,_namespace:string){
@@ -146,14 +149,30 @@ export class RoleNewComponent implements OnInit {
   }
  
 
-   
+  private listNamespaces(){
+
+    this.namespaceService.listAllNamespaces()
+      .pipe(timeout(5000))
+      .subscribe(
+        (r)=>{
+          if(r.ok){
+            this.namespaceList=r.body
+          }else{
+            this.toastr.warning('could not be list namespaces.')
+          }
+        }, 
+        (e)=>{
+          this.toastr.error('An error ocurred trying to fetch namespaces.')
+        }
+      )
+  }
   
 
 
   submitForm(form){
 
     this.role.rules =[]
-    if (this.role.metadata.name){
+    if (this.role.metadata.name && this.role.metadata.namespace){
       this.apiGroupResources.forEach(apires=>{
         var group = apires.group
         apires.resources.forEach(res=>{
@@ -192,7 +211,7 @@ export class RoleNewComponent implements OnInit {
         });
       }
     }else{
-      this.toastr.warning('Role name must be define.')
+      this.toastr.warning('Role name and namespace are required.')
     }
   }
 

@@ -7,7 +7,12 @@ var url = require("url");
 // Inicializamos la ventana de Electron
 var win;
 function createWindow() {
-    win = new electron_1.BrowserWindow({ width: 800, height: 600, title: "Kube-Auth" });
+    win = new electron_1.BrowserWindow({
+        width: 800,
+        height: 600,
+        title: "Kube-Auth",
+        icon: path.join(__dirname, "/../../dist/kube-auth/assets/logo.icns")
+    });
     win.loadURL(url.format({
         pathname: path.join(__dirname, "/../../dist/kube-auth/index.html"),
         protocol: 'file:',

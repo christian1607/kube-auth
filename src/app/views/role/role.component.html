@@ -21,7 +21,7 @@
             <div class="col-xl-2">Namespace:</div>
             <div class="col-xl-2">
               <select id="nsFilter" name="nsFilter" title="--namespace--" [(ngModel)]="filterNamespace" (change)="filterRoleByNamespace()" class="form-control form-control-md">
-                <option value="">Please select</option>
+                <option value="">All</option>
                 <option *ngFor="let ns of namespaceList.items" [value]="ns.metadata.name">{{ns.metadata.name}}</option>          
               </select>
             </div>
@@ -42,11 +42,11 @@
                 <td> {{ cr.metadata.namespace }}</td>
                 <td> {{ cr.metadata.creationTimestamp }}</td>
                 <td>            
-                  <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(cr.metadata.name)"> 
-                    <i class="icon-pencil"></i> &nbsp;&nbsp; Edit &nbsp;&nbsp;
+                  <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(cr.metadata.name,cr.metadata.namespace)"> 
+                    <i class="icon-pencil"></i> &nbsp; Edit &nbsp;&nbsp;
                   </button>
                   <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openConfirmationModal(cr.metadata.name,cr.metadata.namespace)">
-                    <i class="icon-trash"></i> &nbsp;&nbsp; Delete &nbsp;&nbsp;
+                    <i class="icon-trash"></i>  &nbsp; Delete &nbsp;
                   </button>
                 </td>
               </tr>

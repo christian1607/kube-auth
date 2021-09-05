@@ -69,10 +69,8 @@ export class ClusterRoleComponent implements OnInit {
     if (this.clusterRoleToDelete){
       this.clusterRoleService.deleteClusterRole(this.clusterRoleToDelete).subscribe((r)=>{
         if (r.ok){
+          this.clusterRoleList.items=this.clusterRoleList.items.filter(i=>{return i.metadata.name!==this.clusterRoleToDelete})
           this.deleteModal.hide()
-          //this.clusterRoleList.items=this.clusterRoleList.items.filter(i=>{i.metadata.name!==this.clusterRoleToDelete})
-          console.log(this.clusterRoleList.items.filter(i=>{i.metadata.name!=this.clusterRoleToDelete}))
-  
           this.toastr.success('cluster role deleted succesfully.')
         }else{
           this.toastr.error('An error ocurred trying to delete the cluster role.')

@@ -28,10 +28,10 @@
                   <td> {{ cr.metadata.creationTimestamp }}</td>
                   <td>            
                     <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(cr.metadata.name,cr.metadata.namespace)"> 
-                      <i class="icon-pencil"></i> &nbsp;&nbsp; Edit            
+                      <i class="icon-pencil"></i> &nbsp; Edit &nbsp;           
                     </button>
                     <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openConfirmationModal(cr.metadata.name)">
-                      <i class="icon-trash"></i> &nbsp;&nbsp; Delete
+                      <i class="icon-trash"></i> &nbsp; Delete 
                     </button>
                   </td>
                 </tr>

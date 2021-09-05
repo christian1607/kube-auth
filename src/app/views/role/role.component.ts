@@ -31,22 +31,7 @@ export class RoleComponent implements OnInit {
     private toastr: ToastrService) { }
   
   ngOnInit(): void {
-    this.roleService.listRolesAllNamespaces()
-      .pipe(timeout(5000))
-      .subscribe((r)=>{      
-        this.roleList.apiVersion = r.body.apiVersion
-        this.roleList.kind = r.body.kind
-        this.roleList.items = []
-        r.body.items.forEach(cr=>{
-          if(!cr.metadata.name.startsWith('system:')){
-            this.roleList.items.push(cr)
-          }
-        })
-      }, (e)=>{
-        this.toastr.error('An error has occur trying to fetch roles.')
-      }
-    );
-
+    this.listAllRoles();
     this.listNamespaces();
   }
 
@@ -79,7 +64,8 @@ export class RoleComponent implements OnInit {
     if (this.roleToDelete && this.roleNamespaceToDelete){
       this.roleService.deleteRole(this.roleToDelete, this.roleNamespaceToDelete).subscribe((r)=>{
         if (r.ok){
-          this.deleteModal.hide()  
+          this.roleList.items = this.roleList.items.filter(i=>{return i.metadata.name!==this.roleToDelete})
+          this.deleteModal.hide()
           this.toastr.success('Role deleted succesfully.')
         }else{
           this.toastr.error('An error ocurred trying to delete the role.')
@@ -130,10 +116,28 @@ export class RoleComponent implements OnInit {
         }, (e)=>{
           this.toastr.error('An error has occur trying to fetch roles.')
         });
+    }else{
+      this.listAllRoles()
     }
-
   }
 
+  listAllRoles(){
+    this.roleService.listRolesAllNamespaces()
+      .pipe(timeout(5000))
+      .subscribe((r)=>{      
+        this.roleList.apiVersion = r.body.apiVersion
+        this.roleList.kind = r.body.kind
+        this.roleList.items = []
+        r.body.items.forEach(cr=>{
+          if(!cr.metadata.name.startsWith('system:')){
+            this.roleList.items.push(cr)
+          }
+        })
+      }, (e)=>{
+        this.toastr.error('An error has occur trying to fetch roles.')
+      }
+    );
+  }
 
 
 
