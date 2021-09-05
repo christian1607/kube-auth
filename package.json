@@ -1,7 +1,7 @@
 {
-  "name": "@caltamirano/kube-auth",
+  "name": "kube-auth",
   "version": "0.0.1",
-  "description": "Kubernetes Authorization and Authentication Desktop",
+  "description": "Kubernetes Authorization and Authentication Desktop App",
   "license": "MIT",
   "main": "electron/dist/main.js",
   "scripts": {

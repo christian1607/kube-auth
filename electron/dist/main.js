@@ -11,7 +11,7 @@ function createWindow() {
         width: 800,
         height: 600,
         title: "Kube-Auth",
-        icon: path.join(__dirname, "/../../dist/kube-auth/assets/logo.icns")
+        icon: __dirname + "/../../dist/kube-auth/assets/logo.icns"
     });
     win.loadURL(url.format({
         pathname: path.join(__dirname, "/../../dist/kube-auth/index.html"),
