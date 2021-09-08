@@ -28,21 +28,27 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name: 'Access Request',
+    title: true,
+    name: 'Authentication'
+  },
+  {
+    
+    name: 'X.509',
     url: '/buttons',
-    icon: 'cil-running',
+    icon: 'icon-badge',
     children: [
       {
-        name: 'Solicitudes de Acceso',
-        url: '/buttons/buttons',
-        icon: 'cil-send'
+        name: 'Request access',
+        url: '/authentication/x509/request-access',
+        icon: 'icon-key'
       },
       {
-        name: 'Evaluar Solicitudes',
-        url: '/buttons/dropdowns',
-        icon: 'icon-cursor'
+        name: 'Evaluate Request',
+        url: '/authentication/x509/evaluate-access',
+        icon: 'icon-check'
       }
     ]
+      
   },
   {
     name: 'Permissions',

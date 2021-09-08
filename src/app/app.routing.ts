@@ -55,6 +55,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/role/role.module').then(m => m.RoleModule)
       },
       {
+        path: 'authentication',
+        loadChildren: () => import('./views/access-request/access-request.module').then(m => m.AccessRequestModule)
+      },
+      {
         path: 'base',
         loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
       },
