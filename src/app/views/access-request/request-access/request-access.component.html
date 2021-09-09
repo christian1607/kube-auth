@@ -16,13 +16,18 @@
                                     name="role-name" 
                                     class="form-control"
                                     [(ngModel)]="csrName"
-                                    placeholder="name of the cluster role">
+                                    placeholder="e.g. csr-christian">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="textarea-input">Certificate Signing Request:</label>
                             <div class="col-md-8">
-                              <textarea id="textarea-input" name="textarea-input" [(ngModel)]="csr" rows="9" class="form-control" placeholder="Content.."></textarea>
+                              <textarea id="textarea-input" 
+                                name="textarea-input" 
+                                [(ngModel)]="csr" 
+                                rows="20" 
+                                class="form-control" 
+                                placeholder="Paste here your Certificate Signing Request.."></textarea>
                             </div>
                             <div class="col-md-1">
                                 <button type="button" 
@@ -49,7 +54,7 @@
             <div class="card">
                 <form class="form-horizontal" #clusterRoleForm="ngForm" (ngSubmit)="submitForm()">
                     <div class="card-header">
-                        <strong>Create Certificate Signing Request</strong>
+                        <strong>Don't you know how to create a CSR?</strong>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">

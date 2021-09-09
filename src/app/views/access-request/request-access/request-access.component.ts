@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { CertificateSigningRequest } from '../../../model/certificate-signing-request';
+import { CertificateSigningRequestSpec } from '../../../model/certificate-signing-request-spec';
+import { Metadata } from '../../../model/metadata';
+import { CsrService } from '../../../services/csr.service';
 
+const SIGNER_NAME="kubernetes.io/kube-apiserver-client"
 
 @Component({
   selector: 'app-request-access',
@@ -9,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RequestAccessComponent implements OnInit {
 
+  
 
   csr: string;
   csrName: string;
@@ -17,7 +23,8 @@ export class RequestAccessComponent implements OnInit {
   groups: string
   opensslcsrcommand: string = ""
   opensslkeycommand: string = ""
-  constructor(private toastr: ToastrService) {
+  constructor(private toastr: ToastrService,
+    private csrService: CsrService) {
   }
   ngOnInit(): void {
   }
@@ -44,7 +51,7 @@ export class RequestAccessComponent implements OnInit {
           groupsCsr=groupsCsr+"/O="+g
         }        
       })
-      this.opensslcsrcommand="openssl req -new -key user-"+this.username+ ".key -out user-"+this.username+".csr -subj '/CN="+this.username+groupsCsr+"'" 
+      this.opensslcsrcommand="openssl req -new -key user-"+this.username+".key -out user-"+this.username+".csr -subj '/CN="+this.username+groupsCsr+"'" 
     }    
   }
 
@@ -52,11 +59,23 @@ export class RequestAccessComponent implements OnInit {
   
   submitForm(){
     if(this.csrName && this.csr){
-
+      var certificateSigningRequest=new CertificateSigningRequest();
+      certificateSigningRequest.apiVersion="certificates.k8s.io/v1"
+      certificateSigningRequest.kind="CertificateSigningRequest"
+      certificateSigningRequest.metadata=new Metadata()
+      certificateSigningRequest.metadata.name=this.csrName
+      certificateSigningRequest.spec=new CertificateSigningRequestSpec();
+      certificateSigningRequest.spec.request= btoa(this.csr.trim())
+      certificateSigningRequest.spec.signerName=SIGNER_NAME
+      certificateSigningRequest.spec.usages=["client auth"]
+      
+      //expirationSeconds: 86400  one day
+      console.log(certificateSigningRequest)
+      this.toastr.success("Access Request created sucessfully.")
+      this.csrService.createCertificateSigningRequest(certificateSigningRequest);
     }else{
-      this.toastr.warning("Name and Private Key are required fields.")
+      this.toastr.warning("Fields name and certificate Signing request are required.")
     }
-    //TODO: Invoke api to create Certificate Signing REquest
   }
 
 }
