@@ -136,8 +136,6 @@ export class RoleNewComponent implements OnInit {
               })
             })
           })
-        
-          console.log(this.apiGroupResources)
         })
       }
       

@@ -9,8 +9,7 @@ const SIGNER_NAME="kubernetes.io/kube-apiserver-client"
 
 @Component({
   selector: 'app-request-access',
-  templateUrl: './request-access.component.html',
-  styleUrls: ['./request-access.component.scss']
+  templateUrl: './request-access.component.html'
 })
 export class RequestAccessComponent implements OnInit {
 
@@ -18,11 +17,11 @@ export class RequestAccessComponent implements OnInit {
 
   csr: string;
   csrName: string;
-
   username: string
   groups: string
   opensslcsrcommand: string = ""
   opensslkeycommand: string = ""
+
   constructor(private toastr: ToastrService,
     private csrService: CsrService) {
   }
@@ -71,11 +70,28 @@ export class RequestAccessComponent implements OnInit {
       
       //expirationSeconds: 86400  one day
       console.log(certificateSigningRequest)
-      this.toastr.success("Access Request created sucessfully.")
-      this.csrService.createCertificateSigningRequest(certificateSigningRequest);
+      this.csrService.createCertificateSigningRequest(certificateSigningRequest).subscribe((r)=>{
+        if (r.ok){
+          this.toastr.success("Access Request created sucessfully.")
+          this.cleanFields()
+        }else{
+          console.error("ERROR:",r)
+          this.toastr.error('An error ocurred trying to create the access.')
+        }
+        
+      }, (e)=>{
+        console.error("ERROR:",e)
+        this.toastr.error('Unexpected error has ocurred.')
+    });
+
     }else{
       this.toastr.warning("Fields name and certificate Signing request are required.")
     }
+  }
+
+  cleanFields(){
+    this.csrName=""
+    this.csr=""
   }
 
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {environment} from '../../environments/environment';
 import { CertificateSigningRequest } from '../model/certificate-signing-request';
+import { CertificateSigningRequestList } from '../model/certificate-signing-request-list';
 import { CertificateSigningRequestStatus } from '../model/certificate-signing-request-status';
 
 const API_BASE=environment.API_BASE
@@ -15,6 +16,15 @@ export class CsrService {
 
   constructor(private http:HttpClient) { 
 
+  }
+
+  listCertificateSigningRequest(): Observable<HttpResponse<CertificateSigningRequestList>> {
+    return this.http.get<CertificateSigningRequestList>(API_BASE+'/apis/certificates.k8s.io/v1/certificatesigningrequests', 
+      {
+        headers,
+        observe: 'response'
+      }
+    );
   }
 
   createCertificateSigningRequest(csr:CertificateSigningRequest): Observable<HttpResponse<CertificateSigningRequest>> {
