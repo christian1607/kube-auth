@@ -75,12 +75,9 @@ export class RequestAccessComponent implements OnInit {
           this.toastr.success("Access Request created sucessfully.")
           this.cleanFields()
         }else{
-          console.error("ERROR:",r)
           this.toastr.error('An error ocurred trying to create the access.')
-        }
-        
+        }    
       }, (e)=>{
-        console.error("ERROR:",e)
         this.toastr.error('Unexpected error has ocurred.')
     });
 
