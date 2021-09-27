@@ -23,14 +23,20 @@
                   <td> {{ csr.metadata.creationTimestamp }}</td>
                   <td> {{ csr.spec.signerName }}</td>
                   <td> {{ csr.spec.username }}</td>
-                  <td> {{ csr.spec.username }}</td>
-
+                  <td>
+                      <span class="badge badge-pill badge-secondary" *ngIf="!csr.status.certificate && !csr.status.conditions">Pending</span>
+                      <span class="badge badge-pill badge-danger" *ngIf="csr.status.conditions && csr.status.conditions[0].type=='Denied'">Denied</span>
+                      <span class="badge badge-pill badge-success" *ngIf="csr.status.conditions && csr.status.conditions[0].type=='Approved'">Approved</span>
+                  </td>
                   <td>            
-                    <button type="button" class="btn btn-sm btn-pill btn-success" (click)="openApproveModal(crs.metadata.name)"> 
-                      <i class="icon-check"></i> &nbsp; Approve
+                    <button type="button" class="btn btn-sm btn-pill btn-success" data-toggle="modal" (click)="openApproveModal(csr)" *ngIf="!csr.status.conditions"> 
+                      <i class="icon-check"></i> Approve
                     </button>
-                    <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openDenyModal(csr.metadata.name)">
-                      <i class="icon-close"></i> &nbsp; Deny
+                    <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openDenyModal(csr)" *ngIf="!csr.status.conditions">
+                      <i class="icon-close"></i> Deny
+                    </button>
+                    <button type="button" class="btn btn-sm btn-pill btn-info" data-toggle="modal" (click)="showKubeconfig(csr)" *ngIf="csr.status.certificate">
+                        <i class="fa fa-code fa-lg"></i> Kubeconfig
                     </button>
                   </td>
                 </tr>
@@ -44,6 +50,7 @@
     </div>
     <!--/.row-->
 
+   
     <div bsModal #approveModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
@@ -111,6 +118,31 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" (click)="closeDenyModal()">Cancel</button>
                 <button type="button" class="btn btn-danger" (click)="denyAccess()">Deny</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div bsModal #kubeconfigModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Kubeconfig</h4>
+              <button type="button" class="close" (click)="kubeconfigModal.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <monaco-editor
+                        theme="vs-dark"
+                        [file]="file">
+                        </monaco-editor>
+            
+                    </div> 
+                  
+                </div>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

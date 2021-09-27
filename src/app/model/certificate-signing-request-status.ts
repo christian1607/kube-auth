@@ -5,4 +5,8 @@ export class CertificateSigningRequestStatus {
     certificate: string
     conditions: CertificateSigningRequestCondition[]
     
+    constructor(){
+        this.conditions = []
+    }
+
 }

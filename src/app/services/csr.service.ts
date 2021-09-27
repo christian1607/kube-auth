@@ -38,7 +38,7 @@ export class CsrService {
   }
 
   deleteCertificateSigningRequest(name:string): Observable<HttpResponse<any>> {
-    return this.http.post<any>(API_BASE+'/apis/certificates.k8s.io/v1/certificatesigningrequests/'+name,
+    return this.http.delete<any>(API_BASE+'/apis/certificates.k8s.io/v1/certificatesigningrequests/'+name,
       {
         headers,
         observe: 'response'
@@ -47,8 +47,9 @@ export class CsrService {
   }
 
 
-  updateCertificateSigningRequest(name:string): Observable<HttpResponse<any>> {
-    return this.http.post<any>(API_BASE+'/apis/certificates.k8s.io/v1/certificatesigningrequests/'+name,
+  updateCertificateSigningRequest(csr:CertificateSigningRequest): Observable<HttpResponse<any>> {
+    return this.http.put<any>(API_BASE+'/apis/certificates.k8s.io/v1/certificatesigningrequests/'+csr.metadata.name,
+      csr,
       {
         headers,
         observe: 'response'
@@ -56,4 +57,17 @@ export class CsrService {
     );
   }
 
+
+  replaceCertificateSigningRequest(csr:CertificateSigningRequest): Observable<HttpResponse<any>> {
+    return this.http.put<any>(API_BASE+'/apis/certificates.k8s.io/v1/certificatesigningrequests/'+csr.metadata.name+"/approval",
+      csr,
+      {
+        headers,
+        observe: 'response'
+      }
+    );
+  }
+
+
+  approval
 }

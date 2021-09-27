@@ -12,6 +12,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AccessRequestRoutingModule } from './access-request-routing.module';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { MonacoEditorModule } from 'ngx-monaco';
 
 
 @NgModule({
@@ -23,7 +24,9 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     CommonModule,
     FormsModule,
     AccessRequestRoutingModule,
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
+    MonacoEditorModule.forRoot()
 
   ]
 })
