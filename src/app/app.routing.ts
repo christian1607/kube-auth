@@ -51,7 +51,7 @@ export const routes: Routes = [
     },
     children: [
       {
-        path: 'roles',
+        path: 'rbac',
         loadChildren: () => import('./views/role/role.module').then(m => m.RoleModule)
       },
       {

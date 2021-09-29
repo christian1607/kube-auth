@@ -1,4 +1,3 @@
-import { PolicyRules } from "./policy-rules";
 
 export class Metadata {
 

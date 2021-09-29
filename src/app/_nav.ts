@@ -17,13 +17,35 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Cluster Roles',
-        url: '/roles/cluster-roles',
+        url: '/rbac/cluster-roles',
         icon: 'icon-puzzle'
       },
       {
         name: 'Roles',
-        url: '/roles/roles',
+        url: '/rbac/roles',
         icon: 'icon-puzzle'
+      }
+    ]
+  },
+  {
+    name: 'Permissions',
+    url: '/buttons',
+    icon: 'cil-https',
+    children: [
+      {
+        name: 'Users',
+        url: '/rbac/user',
+        icon: 'cil-user'
+      },
+      {
+        name: 'Groups',
+        url: '/rbac/group',
+        icon: 'cil-group'
+      },
+      {
+        name: 'Service Accounts',
+        url: '/rbac/service-account',
+        icon: 'cil-group'
       }
     ]
   },
@@ -49,23 +71,6 @@ export const navItems: INavData[] = [
       }
     ]
       
-  },
-  {
-    name: 'Permissions',
-    url: '/buttons',
-    icon: 'cil-https',
-    children: [
-      {
-        name: 'Users',
-        url: '/buttons/buttons',
-        icon: 'cil-user'
-      },
-      {
-        name: 'Grous',
-        url: '/buttons/dropdowns',
-        icon: 'cil-group'
-      }
-    ]
   },
   {
     name: 'Colors',
