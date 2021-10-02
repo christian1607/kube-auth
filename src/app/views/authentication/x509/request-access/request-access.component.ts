@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { CertificateSigningRequest } from '../../../model/certificate-signing-request';
-import { CertificateSigningRequestSpec } from '../../../model/certificate-signing-request-spec';
-import { Metadata } from '../../../model/metadata';
-import { CsrService } from '../../../services/csr.service';
+import { CertificateSigningRequest } from '../../../../model/certificate-signing-request';
+import { CertificateSigningRequestSpec } from '../../../../model/certificate-signing-request-spec';
+import { Metadata } from '../../../../model/metadata';
+import { CsrService } from '../../../../services/csr.service';
 
 const SIGNER_NAME="kubernetes.io/kube-apiserver-client"
 

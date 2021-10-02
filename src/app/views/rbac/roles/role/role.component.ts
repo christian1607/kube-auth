@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { timeout } from 'rxjs/operators';
-import { NamespaceList } from '../../model/namespace-list';
-import { RoleList } from '../../model/role-list';
-import { NamespaceService } from '../../services/namespace.service';
-import { RoleService } from '../../services/role.service';
+import { NamespaceList } from '../../../../model/namespace-list';
+import { RoleList } from '../../../../model/role-list';
+import { NamespaceService } from '../../../../services/namespace.service';
+import { RoleService } from '../../../../services/role.service';
 
 @Component({
   selector: 'app-role',

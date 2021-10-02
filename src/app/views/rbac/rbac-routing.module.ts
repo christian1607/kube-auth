@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { RoleComponent } from './role.component';
-import { ClusterRoleComponent } from './cluster-role.component';
-import { ClusterRoleNewComponent } from './cluster-role-new/cluster-role-new.component';
-import { RoleNewComponent } from './role-new/role-new.component';
+import { RoleComponent } from './roles/role/role.component';
+import { ClusterRoleComponent } from './roles/cluster-role/cluster-role.component';
+import { ClusterRoleNewComponent } from './roles/cluster-role/register/cluster-role-new.component';
+import { RoleNewComponent } from './roles/role/register/role-new.component';
+import { ClusterRoleBindingComponent } from './binding/cluster-role/cluster-role.component';
+import { RoleBindingComponent } from './binding/role/role.component';
 
 const routes: Routes = [
   {
@@ -44,6 +46,20 @@ const routes: Routes = [
         data: {
           title: 'Create/Edit Cluster Roles'
         }
+      },
+      {
+        path: 'binding/cluster-role',
+        component: ClusterRoleBindingComponent,
+        data: {
+          title: 'Assing Cluster Roles permissions'
+        }
+      },
+      {
+        path: 'binding/role',
+        component: RoleBindingComponent,
+        data: {
+          title: 'Assing Role permissions'
+        }
       }
     ]
   }
@@ -53,4 +69,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RoleRoutingModule {}
+export class RbacRoutingModule {}

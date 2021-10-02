@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { ApiGroupList } from '../../../model/api-group-list';
-import { ApiGroupResource } from '../../../model/api-group-resource';
-import { ApiResource } from '../../../model/api-resource';
-import { ApiResourceAction } from '../../../model/api-resource-action';
-import { ClusterRole } from '../../../model/cluster-role';
-import { GroupVersion } from '../../../model/group-version';
-import { PolicyRules } from '../../../model/policy-rules';
-import { ApiGroupService } from '../../../services/api-group.service';
-import { ClusterRoleService } from '../../../services/cluster-role.service';
+import { ApiGroupList } from '../../../../../model/api-group-list';
+import { ApiGroupResource } from '../../../../../model/api-group-resource';
+import { ApiResourceAction } from '../../../../../model/api-resource-action';
+import { ClusterRole } from '../../../../../model/cluster-role';
+import { GroupVersion } from '../../../../../model/group-version';
+import { PolicyRules } from '../../../../../model/policy-rules';
+import { ApiGroupService } from '../../../../../services/api-group.service';
+import { ClusterRoleService } from '../../../../../services/cluster-role.service';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 

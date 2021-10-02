@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { CertificateSigningRequestList } from '../../../model/certificate-signing-request-list';
-import { CsrService } from '../../../services/csr.service';
+import { CertificateSigningRequestList } from '../../../../model/certificate-signing-request-list';
+import { CsrService } from '../../../../services/csr.service';
 import { timeout } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { MonacoFile } from 'ngx-monaco';
-import { CertificateSigningRequest } from '../../../model/certificate-signing-request';
+import { CertificateSigningRequest } from '../../../../model/certificate-signing-request';
 import { env } from 'process';
-import { CertificateSigningRequestCondition } from '../../../model/certificate-signing-request-condition';
-import { CertificateSigningRequestStatus } from '../../../model/certificate-signing-request-status';
+import { CertificateSigningRequestCondition } from '../../../../model/certificate-signing-request-condition';
+import { CertificateSigningRequestStatus } from '../../../../model/certificate-signing-request-status';
 
 @Component({
   selector: 'app-evaluate-access',

@@ -52,11 +52,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'rbac',
-        loadChildren: () => import('./views/role/role.module').then(m => m.RoleModule)
+        loadChildren: () => import('./views/rbac/rbac.module').then(m => m.RbacModule)
       },
       {
         path: 'authentication',
-        loadChildren: () => import('./views/access-request/access-request.module').then(m => m.AccessRequestModule)
+        loadChildren: () => import('./views/authentication/x509/x509.module').then(m => m.X509Module)
       },
       {
         path: 'base',

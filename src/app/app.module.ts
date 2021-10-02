@@ -47,7 +47,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -79,7 +78,6 @@ import { ChartsModule } from 'ng2-charts';
     P500Component,
     LoginComponent,
     RegisterComponent
-    
   
   ],
   providers: [

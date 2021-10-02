@@ -9,7 +9,7 @@ import { EvaluateAccessComponent } from './evaluate-access/evaluate-access.compo
 import { FormsModule } from '@angular/forms';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { AccessRequestRoutingModule } from './access-request-routing.module';
+import { X509RoutingModule } from './x509-routing.module';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { MonacoEditorModule } from 'ngx-monaco';
@@ -23,11 +23,11 @@ import { MonacoEditorModule } from 'ngx-monaco';
   imports: [
     CommonModule,
     FormsModule,
-    AccessRequestRoutingModule,
+    X509RoutingModule,
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     MonacoEditorModule.forRoot()
 
   ]
 })
-export class AccessRequestModule { }
+export class X509Module { }

@@ -11,41 +11,36 @@ export const navItems: INavData[] = [
     name: 'RBAC'
   },
   {
-    name: 'Kubernetes Roles',
-    url: '/buttons',
+    name: 'Permissions',
+    url: '/permissions',
     icon: 'cil-shield-alt',
     children: [
       {
         name: 'Cluster Roles',
         url: '/rbac/cluster-roles',
-        icon: 'icon-puzzle'
+        icon: 'icon-shield'
       },
       {
         name: 'Roles',
         url: '/rbac/roles',
-        icon: 'icon-puzzle'
+        icon: 'icon-shield'
       }
     ]
   },
   {
-    name: 'Permissions',
-    url: '/buttons',
+    name: 'Assign Permissions',
+    url: '/binding',
     icon: 'cil-https',
     children: [
       {
-        name: 'Users',
-        url: '/rbac/user',
-        icon: 'cil-user'
+        name: 'Cluster Roles',
+        url: '/rbac/binding/cluster-role',
+        icon: 'icon-key'
       },
       {
-        name: 'Groups',
-        url: '/rbac/group',
-        icon: 'cil-group'
-      },
-      {
-        name: 'Service Accounts',
-        url: '/rbac/service-account',
-        icon: 'cil-group'
+        name: 'Role',
+        url: '/rbac/binding/role',
+        icon: 'icon-key'
       }
     ]
   },

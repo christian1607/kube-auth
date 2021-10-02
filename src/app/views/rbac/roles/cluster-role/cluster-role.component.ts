@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { ClusterRoleList } from '../../model/cluster-role-list';
-import { ClusterRoleService } from '../../services/cluster-role.service';
 import { ToastrService } from 'ngx-toastr';
 import { timeout } from 'rxjs/operators';
+import { ClusterRoleList } from '../../../../model/cluster-role-list';
+import { ClusterRoleService } from '../../../../services/cluster-role.service';
 
 
 
