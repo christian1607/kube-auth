@@ -12,6 +12,7 @@ import { RoleComponent } from './roles/role/role.component';
 import { RoleNewComponent } from './roles/role/register/role-new.component';
 import { ClusterRoleBindingComponent } from './binding/cluster-role/cluster-role.component';
 import { RoleBindingComponent } from './binding/role/role.component';
+import { ClusterRoleBindingRegisterComponent } from './binding/cluster-role/register/register.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { RoleBindingComponent } from './binding/role/role.component';
     RoleComponent,
     RoleNewComponent,
     ClusterRoleBindingComponent,
-    RoleBindingComponent
+    RoleBindingComponent,
+    ClusterRoleBindingRegisterComponent
   ],
   imports: [
     CommonModule,

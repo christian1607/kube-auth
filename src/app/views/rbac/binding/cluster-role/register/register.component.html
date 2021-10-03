@@ -1,0 +1,78 @@
+<div class="animated fadeIn">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <form class="form-horizontal" #clusterRoleForm="ngForm" (ngSubmit)="submitForm(clusterRoleForm)">
+                    <div class="card-header">
+                        <strong>Create Assignment to Cluster Role </strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="text-input">Name:</label>
+                            <div class="col-md-4">
+                                <input type="text" 
+                                    id="clusterrolebinding-name" 
+                                    name="clusterrolebinding-name" 
+                                    class="form-control"
+                                    [disabled]="isEdit"
+                                    required
+                                    [(ngModel)]="clusterRoleBinding.metadata.name"
+                                    placeholder="name">
+                            </div>
+                            <label class="col-md-2 col-form-label" for="text-input">Cluster Role:</label>
+                            <div class="col-md-4">
+                                <select id="clusterrole" 
+                                    name="clusterrole" 
+                                    [(ngModel)]="clusterRole"  
+                                    class="form-control form-control-md" 
+                                    required 
+                                    [disabled]="isEdit"> 
+
+                                    <option value="">-- Please select --</option>
+                                    <option *ngFor="let cr of clusterRoleList.items" [value]="cr">{{cr.metadata.name}}</option>          
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card card-accent-primary" >
+                            <div class="card-header">
+                                Users
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-accent-success" >
+                            <div class="card-header">
+                                Groups
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-accent-warning" >
+                            <div class="card-header">
+                                Service Accounts
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="icon-paper-plane"></i>
+                            Submit</button>
+                        <button type="reset" class="btn btn-sm btn-danger"><i class="icon-action-undo"></i> Reset</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>

@@ -7,12 +7,13 @@ import { ClusterRoleNewComponent } from './roles/cluster-role/register/cluster-r
 import { RoleNewComponent } from './roles/role/register/role-new.component';
 import { ClusterRoleBindingComponent } from './binding/cluster-role/cluster-role.component';
 import { RoleBindingComponent } from './binding/role/role.component';
+import { ClusterRoleBindingRegisterComponent } from './binding/cluster-role/register/register.component';
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Roles'
+      title: 'RBAC'
     },
     children: [
       {
@@ -51,9 +52,19 @@ const routes: Routes = [
         path: 'binding/cluster-role',
         component: ClusterRoleBindingComponent,
         data: {
+          title: 'Cluster Roles permissions'
+        }
+      },
+      {
+        path: 'binding/cluster-role/register',
+        component: ClusterRoleBindingRegisterComponent,
+        data: {
           title: 'Assing Cluster Roles permissions'
         }
       },
+
+      
+
       {
         path: 'binding/role',
         component: RoleBindingComponent,
