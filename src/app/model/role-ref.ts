@@ -1,6 +1,7 @@
-import { ApiBase } from "./api-base";
 
-export class RoleRef extends ApiBase{
+export class RoleRef{
 
     name: string
+    kind: string
+    apiGroup: string
 }

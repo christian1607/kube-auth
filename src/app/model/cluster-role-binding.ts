@@ -14,6 +14,8 @@ export class ClusterRoleBinding  extends ApiBase{
 
     constructor(){
         super();
+        this.apiVersion="rbac.authorization.k8s.io/v1"
+        this.kind="ClusterRoleBinding"
         this.subjects=[]
         this.metadata=new Metadata()
         this.roleRef=new RoleRef()

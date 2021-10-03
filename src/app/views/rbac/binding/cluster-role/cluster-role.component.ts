@@ -16,7 +16,7 @@ export class ClusterRoleBindingComponent implements OnInit {
   @ViewChild('deleteModal') 
   public deleteModal: ModalDirective;
 
-  public listClusterRoleBinding : ClusterRoleBindingList
+  public listClusterRoleBinding = new ClusterRoleBindingList()
   
   private crbToDelete: string
 

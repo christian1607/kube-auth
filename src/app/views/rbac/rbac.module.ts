@@ -7,6 +7,8 @@ import { ClusterRoleNewComponent } from './roles/cluster-role/register/cluster-r
 import { ClusterRoleComponent } from './roles/cluster-role/cluster-role.component';
 import { FormsModule } from '@angular/forms';
 
+import { TagInputModule } from 'ngx-chips';
+
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RoleComponent } from './roles/role/role.component';
 import { RoleNewComponent } from './roles/role/register/role-new.component';
@@ -28,8 +30,8 @@ import { ClusterRoleBindingRegisterComponent } from './binding/cluster-role/regi
     CommonModule,
     FormsModule,
     RbacRoutingModule,
-    ModalModule.forRoot()
-
+    ModalModule.forRoot(),
+    TagInputModule
   ]
 })
 export class RbacModule { }

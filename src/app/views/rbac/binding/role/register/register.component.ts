@@ -15,15 +15,15 @@ import { ServiceAccount } from '../../../../../model/service-account';
   selector: 'app-register',
   templateUrl: './register.component.html'
 })
-export class ClusterRoleBindingRegisterComponent implements OnInit {
+export class RoleBindingRegisterComponent implements OnInit {
 
 
   clusterRoleBinding : ClusterRoleBinding= new ClusterRoleBinding()
-  clusterRoleList: ClusterRoleList=new ClusterRoleList()
-  clusterRole: ClusterRole=new ClusterRole()
+  clusterRoleList: ClusterRoleList
+  clusterRole: ClusterRole
   clusterRoleBindingName : string
-  users : Object[] = [];
-  groups : Object[] = [];
+  users : string[] = [];
+  groups : string[] = [];
   serviceAccounts : ServiceAccount[]=[]
   constructor(private clusterRoleService: ClusterRoleService,
     private clusterRoleBindingService: ClusterRoleBindingService,
@@ -50,29 +50,27 @@ export class ClusterRoleBindingRegisterComponent implements OnInit {
   submitForm(){
 
     if (this.clusterRole){
-      this.clusterRoleBinding.roleRef.apiGroup="rbac.authorization.k8s.io"
-      this.clusterRoleBinding.roleRef.kind="ClusterRole"
+      this.clusterRoleBinding.roleRef.apiVersion=this.clusterRole.apiVersion
+      this.clusterRoleBinding.roleRef.kind=this.clusterRole.kind
       this.clusterRoleBinding.roleRef.name=this.clusterRole.metadata.name
   
       this.users.forEach(u=>{
-        this.clusterRoleBinding.subjects.push(new Subject(u["value"],"rbac.authorization.k8s.io","User"))
+        this.clusterRoleBinding.subjects.push(new Subject(u,"rbac.authorization.k8s.io","User"))
       })
       
       this.groups.forEach(g=>{
-        this.clusterRoleBinding.subjects.push(new Subject(g["value"],"rbac.authorization.k8s.io","Group"))
+        this.clusterRoleBinding.subjects.push(new Subject(g,"rbac.authorization.k8s.io","Group"))
       })
-
-      this.clusterRoleBindingService.createClusterRoleBinding(this.clusterRoleBinding)
+      console.log(this.clusterRoleBinding)
+/*      this.clusterRoleBindingService.createClusterRoleBinding(this.clusterRoleBinding)
         .subscribe(r=>{
           if(r.ok ){
               this.toastr.success("Cluster Role Assignment created.")
               return
           }
-          this.toastr.error("An error ocurred while trying to create permission assignment.")
-      }, e=>{
-        this.toastr.error("Unexpected error ocurred.")
+          this.toastr.error("Unexpected error ocurred.")
       })
-
+    */
     }
 
   

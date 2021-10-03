@@ -9,6 +9,8 @@ export class ClusterRole {
     rules: PolicyRules[]
 
     constructor(){
+        this.apiVersion="v1"
+        this.kind="ClusterRole"
         this.metadata=new Metadata();
         this.rules= Array<PolicyRules>();
     }

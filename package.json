@@ -46,6 +46,7 @@
     "monaco-editor": "^0.27.0",
     "ng2-charts": "^2.4.2",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-chips": "^2.2.2",
     "ngx-monaco": "^0.8.0",
     "ngx-monaco-editor": "^12.0.0",
     "ngx-perfect-scrollbar": "^10.1.0",
