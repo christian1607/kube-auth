@@ -36,8 +36,10 @@ export class ClusterRoleBindingComponent implements OnInit {
     .subscribe(r=>{
       if(r.ok){
         this.listClusterRoleBinding=r.body
+        this.listClusterRoleBinding.items=this.listClusterRoleBinding.items.filter(crb=>{return !crb.metadata.name.startsWith("system:")})
       }
     })
+    
   }
 
   goToEdit(crb: string){

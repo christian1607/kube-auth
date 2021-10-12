@@ -9,6 +9,7 @@ import { ClusterRoleBindingService } from '../../../../../services/cluster-role-
 import { ClusterRole } from '../../../../../model/cluster-role';
 import { Subject } from '../../../../../model/subject';
 import { ServiceAccount } from '../../../../../model/service-account';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -25,12 +26,40 @@ export class ClusterRoleBindingRegisterComponent implements OnInit {
   users : Object[] = [];
   groups : Object[] = [];
   serviceAccounts : ServiceAccount[]=[]
+  isEdit: boolean = false
   constructor(private clusterRoleService: ClusterRoleService,
     private clusterRoleBindingService: ClusterRoleBindingService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    var crb = this.route.snapshot.queryParamMap.get('cluster-role-binding')
+    if (crb){
+      this.isEdit=true    
+    }
     this.listClusterRole()
+    
+  }
+
+  private fetchClusterRoleBinding(name:string){
+    this.clusterRoleBindingService.findClusterRolesBindings(name)
+      .subscribe(r=>{
+        if (r.ok){
+          this.clusterRoleBinding=r.body
+          this.users=[]
+          this.groups=[]
+          this.clusterRoleBinding.subjects.forEach(sub=>{
+            if (sub.kind=="Group"){
+              this.groups.push({"value":sub.name,"display":sub.name})
+            }
+            if (sub.kind=="User"){
+              this.users.push({"value":sub.name,"display":sub.name})
+            }
+          })
+
+          this.clusterRole=this.clusterRoleList.items.find(crl=> {return  crl.metadata.name==this.clusterRoleBinding.roleRef.name})
+        }
+    })
   }
 
   listClusterRole(){
@@ -41,6 +70,11 @@ export class ClusterRoleBindingRegisterComponent implements OnInit {
          if(r.ok ){
            this.clusterRoleList=r.body
            this.clusterRoleList.items=this.clusterRoleList.items.filter(cr=>{return !cr.metadata.name.startsWith("system:")})
+
+           if (this.isEdit){
+            var crb = this.route.snapshot.queryParamMap.get('cluster-role-binding')
+            this.fetchClusterRoleBinding(crb)
+           }
            return
          }
          this.toastr.error("Error while trying to fetch cluster roles")
@@ -53,7 +87,8 @@ export class ClusterRoleBindingRegisterComponent implements OnInit {
       this.clusterRoleBinding.roleRef.apiGroup="rbac.authorization.k8s.io"
       this.clusterRoleBinding.roleRef.kind="ClusterRole"
       this.clusterRoleBinding.roleRef.name=this.clusterRole.metadata.name
-  
+      this.clusterRoleBinding.subjects = []
+
       this.users.forEach(u=>{
         this.clusterRoleBinding.subjects.push(new Subject(u["value"],"rbac.authorization.k8s.io","User"))
       })
@@ -62,17 +97,30 @@ export class ClusterRoleBindingRegisterComponent implements OnInit {
         this.clusterRoleBinding.subjects.push(new Subject(g["value"],"rbac.authorization.k8s.io","Group"))
       })
 
-      this.clusterRoleBindingService.createClusterRoleBinding(this.clusterRoleBinding)
-        .subscribe(r=>{
-          if(r.ok ){
-              this.toastr.success("Cluster Role Assignment created.")
-              return
-          }
-          this.toastr.error("An error ocurred while trying to create permission assignment.")
-      }, e=>{
-        this.toastr.error("Unexpected error ocurred.")
-      })
-
+      if (this.isEdit){
+        this.clusterRoleBindingService.updateClusterRoleBinding(this.clusterRoleBinding.metadata.name,this.clusterRoleBinding)
+          .subscribe(r=>{
+            if(r.ok ){
+                this.toastr.success("Cluster Role permission updated.")
+                this.fetchClusterRoleBinding(this.clusterRoleBinding.metadata.name)
+                return
+            }
+            this.toastr.error("An error ocurred while trying to update permission assignment.")
+        }, e=>{
+          this.toastr.error("Unexpected error ocurred.")
+        })
+      }else{
+        this.clusterRoleBindingService.createClusterRoleBinding(this.clusterRoleBinding)
+          .subscribe(r=>{
+            if(r.ok ){
+                this.toastr.success("Cluster Role permission created.")
+                return
+            }
+            this.toastr.error("An error ocurred while trying to create permission assignment.")
+        }, e=>{
+          this.toastr.error("Unexpected error ocurred.")
+        })
+      }
     }
 
   

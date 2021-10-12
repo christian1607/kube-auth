@@ -27,6 +27,12 @@ export class ClusterRoleBindingService {
       );
   }
 
+  findClusterRolesBindings(name:string): Observable<HttpResponse<ClusterRoleBinding>> {
+
+    return this.http.get<ClusterRoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/clusterrolebindings/'+name,
+        {headers,observe: 'response'}
+      );
+  }
   createClusterRoleBinding(crb:ClusterRoleBinding): Observable<HttpResponse<ClusterRoleBinding>> {
     return this.http.post<ClusterRoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/clusterrolebindings',
         crb,
