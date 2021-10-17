@@ -3,34 +3,46 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form class="form-horizontal" #clusterRoleForm="ngForm" (ngSubmit)="submitForm(clusterRoleForm)">
+                <form class="form-horizontal" #roleForm="ngForm" (ngSubmit)="submitForm(roleForm)">
                     <div class="card-header">
-                        <strong>Create Assignment to Cluster Role </strong>
+                        <strong>Create Assignment to Role </strong>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label" for="text-input">Name:</label>
-                            <div class="col-md-4">
+                            <label class="col-md-1 col-form-label" for="text-input">Name:</label>
+                            <div class="col-md-3">
                                 <input type="text" 
-                                    id="clusterrolebinding-name" 
-                                    name="clusterrolebinding-name" 
+                                    id="rolebinding-name" 
+                                    name="rolebinding-name" 
                                     class="form-control"
                                     [disabled]="isEdit"
                                     required
-                                    [(ngModel)]="clusterRoleBinding.metadata.name"
+                                    [(ngModel)]="roleBinding.metadata.name"
                                     placeholder="name">
                             </div>
-                            <label class="col-md-2 col-form-label" for="text-input">Cluster Role:</label>
-                            <div class="col-md-4">
-                                <select id="clusterrole" 
-                                    name="clusterrole" 
-                                    [(ngModel)]="clusterRole"  
+                            <label class="col-md-1 col-form-label" for="text-input">Namespace:</label>
+                            <div class="col-md-3">
+                                <select id="nsFilter" 
+                                    name="nsFilter" 
+                                    title="--namespace--" 
+                                    [(ngModel)]="filterNamespace" 
+                                    (change)="filterRoleByNamespace()" 
+                                    class="form-control form-control-md">
+                                    <option value="">-- Please select --</option>
+                                    <option *ngFor="let ns of namespaceList.items" [value]="ns.metadata.name">{{ns.metadata.name}}</option>          
+                                </select>
+                            </div>
+                            <label class="col-md-1 col-form-label" for="text-input">Role:</label>
+                            <div class="col-md-3">
+                                <select id="role" 
+                                    name="role" 
+                                    [(ngModel)]="role"  
                                     class="form-control form-control-md" 
                                     required 
                                     [disabled]="isEdit"> 
 
                                     <option value="">-- Please select --</option>
-                                    <option *ngFor="let cr of clusterRoleList.items" [ngValue]="cr">{{cr.metadata.name}}</option>          
+                                    <option *ngFor="let cr of roleList.items" [ngValue]="cr">{{cr.metadata.name}}</option>          
                                 </select>
                             </div>
                         </div>
@@ -72,9 +84,21 @@
                             <div class="card-header">
                                 Service Accounts
                             </div>
+                        
                             <div class="card-body">
                                 <div class="row">
                                     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                                    <ng-select
+                                        [items]="serviceAccountList$ | async"
+                                        [multiple]="true"
+                                        [closeOnSelect]="false"
+                                        [hideSelected]="true"
+                                        bindLabel="name"
+                                        bindValue="name" 
+                                        name="service-accounts"
+                                        placeholder="Select Service Account"
+                                        [(ngModel)]="selectedServiceAccount">
+                                    </ng-select>
                                 </div>
                             </div>
                         </div>

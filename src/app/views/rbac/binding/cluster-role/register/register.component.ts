@@ -25,7 +25,6 @@ export class ClusterRoleBindingRegisterComponent implements OnInit {
   clusterRoleBindingName : string
   users : Object[] = [];
   groups : Object[] = [];
-  serviceAccounts : ServiceAccount[]=[]
   isEdit: boolean = false
   constructor(private clusterRoleService: ClusterRoleService,
     private clusterRoleBindingService: ClusterRoleBindingService,

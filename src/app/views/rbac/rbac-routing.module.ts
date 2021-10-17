@@ -8,6 +8,7 @@ import { RoleNewComponent } from './roles/role/register/role-new.component';
 import { ClusterRoleBindingComponent } from './binding/cluster-role/cluster-role.component';
 import { RoleBindingComponent } from './binding/role/role.component';
 import { ClusterRoleBindingRegisterComponent } from './binding/cluster-role/register/register.component';
+import { RoleBindingRegisterComponent } from './binding/role/register/register.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,13 @@ const routes: Routes = [
       {
         path: 'binding/role',
         component: RoleBindingComponent,
+        data: {
+          title: 'Role permissions'
+        }
+      },
+      {
+        path: 'binding/role/register',
+        component: RoleBindingRegisterComponent,
         data: {
           title: 'Assing Role permissions'
         }
