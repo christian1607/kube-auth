@@ -10,6 +10,8 @@ export class RoleBinding {
     
     constructor(){
         this.metadata=new Metadata()
+        this.roleRef=new RoleRef()
+        this.subjects=[]
     }
     
 }

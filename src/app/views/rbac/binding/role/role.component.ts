@@ -69,11 +69,12 @@ export class RoleBindingComponent implements OnInit {
       )
   }
 
-  goToEdit(crb: string){
+  goToEdit(roleBinding: string,namespace: string){
 
     this.router.navigate(['register'],{
       queryParams: {
-        "role-binding": crb,
+        "role-binding": roleBinding,
+        "namespace": namespace,
       },
       relativeTo: this.route
     })

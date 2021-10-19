@@ -36,15 +36,15 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let crb of listRoleBinding.items">
-                  <td> {{ crb.metadata.name }}</td>
-                  <td> {{ crb.metadata.namespace }}</td>
-                  <td> {{ crb.metadata.creationTimestamp }}</td>
+                <tr *ngFor="let rb of listRoleBinding.items">
+                  <td> {{ rb.metadata.name }}</td>
+                  <td> {{ rb.metadata.namespace }}</td>
+                  <td> {{ rb.metadata.creationTimestamp }}</td>
                   <td>            
-                    <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(crb.metadata.name)"> 
+                    <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(rb.metadata.name,rb.metadata.namespace)"> 
                       <i class="icon-pencil"></i> Edit &nbsp;
                     </button>
-                    <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openConfirmationModal(crb.metadata.name)">
+                    <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openConfirmationModal(rb.metadata.name,rb.metadata.namespace)">
                       <i class="icon-trash"></i>  Delete &nbsp;
                     </button>
                   </td>

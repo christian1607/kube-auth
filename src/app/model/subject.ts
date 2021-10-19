@@ -8,8 +8,12 @@ export class Subject  {
 
     constructor(name:string, apiGroup: string, kind:string, namespace?:string ){
         this.name=name
-        this.apiGroup=apiGroup
+        if (apiGroup){
+            this.apiGroup=apiGroup
+        }
+        
         this.kind=kind
+
         if (namespace){
             this.namespace=namespace
         }

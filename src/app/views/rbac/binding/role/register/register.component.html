@@ -25,7 +25,8 @@
                                 <select id="nsFilter" 
                                     name="nsFilter" 
                                     title="--namespace--" 
-                                    [(ngModel)]="filterNamespace" 
+                                    [(ngModel)]="roleBinding.metadata.namespace" 
+                                    [disabled]="isEdit"
                                     (change)="filterRoleByNamespace()" 
                                     class="form-control form-control-md">
                                     <option value="">-- Please select --</option>
@@ -89,7 +90,7 @@
                                 <div class="row">
                                     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
                                     <ng-select
-                                        [items]="serviceAccountList$ | async"
+                                        [items]="serviceAccountList | async"
                                         [multiple]="true"
                                         [closeOnSelect]="false"
                                         [hideSelected]="true"
@@ -97,7 +98,7 @@
                                         bindValue="name" 
                                         name="service-accounts"
                                         placeholder="Select Service Account"
-                                        [(ngModel)]="selectedServiceAccount">
+                                        [(ngModel)]="serviceAccounts">
                                     </ng-select>
                                 </div>
                             </div>

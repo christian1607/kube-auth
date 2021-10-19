@@ -34,10 +34,9 @@ export class RoleBindingRegisterComponent implements OnInit {
 
   users : Object[] = [];
   groups : Object[] = [];
-  serviceAccounts : Object[]=[];
+  serviceAccounts : string[]=[];
 
-  serviceAccountList$: Observable<any[]>;
-  selectedServiceAccount = [];
+  serviceAccountList: Observable<any[]>;
 
 
   constructor(private roleService: RoleService,
@@ -56,9 +55,10 @@ export class RoleBindingRegisterComponent implements OnInit {
       this.isEdit=true    
     }
 
+    this.listServiceAccounts()
     this.listRole()
     this.listNamespaces()
-    this.listServiceAccounts()
+    
   }
 
   listRole(){
@@ -69,16 +69,22 @@ export class RoleBindingRegisterComponent implements OnInit {
          if(r.ok ){
            this.roleList=r.body
            this.roleList.items=this.roleList.items.filter(cr=>{return !cr.metadata.name.startsWith("system:")})
+           
+           if (this.isEdit){
+            var rb = this.route.snapshot.queryParamMap.get('role-binding')
+            var ns = this.route.snapshot.queryParamMap.get('namespace')
+            this.fetchRoleBinding(rb,ns)
+           }
            return
          }
-         this.toastr.error("Error while trying to fetch cluster roles")
+         this.toastr.error("Error while trying to fetch roles")
       })
   }
 
   
   filterRoleByNamespace(){
 
-    this.roleService.listRoles(this.filterNamespace)
+    this.roleService.listRoles(this.roleBinding.metadata.namespace)
       .pipe(timeout(environment.TIMEOUT_HTTP_REQUEST))
       .subscribe(r=>{
           if(r.ok ){
@@ -112,9 +118,9 @@ export class RoleBindingRegisterComponent implements OnInit {
     this.serviceAccService.listServiceAccount()
       .subscribe(r=>{
         if (r.ok){
-          this.serviceAccountList$=of(r.body.items.map(sa=>{
+          this.serviceAccountList=of(r.body.items.map(sa=>{
             return {"id":sa.metadata.name,"name":sa.metadata.name}
-          })).pipe(delay(500));
+          }));
         }
       })
   }
@@ -135,7 +141,7 @@ export class RoleBindingRegisterComponent implements OnInit {
               this.users.push({"value":sub.name,"display":sub.name})
             }
             if (sub.kind=="ServiceAccount"){
-              this.users.push({"value":sub.name,"display":sub.name})
+              this.serviceAccounts.push(sub.name)
             }
           })
 
@@ -151,7 +157,8 @@ export class RoleBindingRegisterComponent implements OnInit {
       this.roleBinding.roleRef.kind="Role"
       this.roleBinding.roleRef.name=this.role.metadata.name
       this.roleBinding.metadata.namespace=this.filterNamespace
-
+      
+      console.log(this.serviceAccounts)
   
       this.users.forEach(u=>{
         this.roleBinding.subjects.push(new Subject(u["value"],"rbac.authorization.k8s.io","User"))
@@ -159,6 +166,10 @@ export class RoleBindingRegisterComponent implements OnInit {
       
       this.groups.forEach(g=>{
         this.roleBinding.subjects.push(new Subject(g["value"],"rbac.authorization.k8s.io","Group"))
+      })
+
+      this.serviceAccounts.forEach(sa=>{
+        this.roleBinding.subjects.push(new Subject(sa,"","ServiceAccount",this.filterNamespace))
       })
 
       if (this.isEdit){

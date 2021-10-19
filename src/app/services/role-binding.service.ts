@@ -34,21 +34,21 @@ export class RoleBindingService {
   }
 
   createRoleBinding(crb:RoleBinding,namespace: string): Observable<HttpResponse<RoleBinding>> {
-    return this.http.post<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/'+ namespace + '/rolebindings',
+    return this.http.post<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+ namespace + '/rolebindings',
         crb,
         {headers,observe: 'response'}
       );
   }
 
   updateRoleBinding(name: string, crb:RoleBinding,namespace: string): Observable<HttpResponse<RoleBinding>> {
-    return this.http.put<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/'+ namespace + '/rolebindings/'+name,
+    return this.http.put<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+ namespace + '/rolebindings/'+name,
         crb,
         {headers,observe: 'response'}
       );
   }
 
   deleteRoleBinding(name: string,namespace: string): Observable<HttpResponse<RoleBinding>> {
-    return this.http.delete<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/'+ namespace + '/rolebindings/'+name,   
+    return this.http.delete<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+ namespace + '/rolebindings/'+name,   
         {headers,observe: 'response'}
       );
   }
