@@ -1,11 +1,17 @@
-import { ApiBase } from "./api-base"
+import { Metadata } from "./metadata"
 import { RoleRef } from "./role-ref"
 import { Subject } from "./subject"
 
-export class RoleBinding extends ApiBase{
+export class RoleBinding {
 
-        roleRef: RoleRef
+    metadata: Metadata
+    roleRef: RoleRef
+    subjects: Subject[]
     
-        subjects: Subject[]
+    constructor(){
+        this.metadata=new Metadata()
+        this.roleRef=new RoleRef()
+        this.subjects=[]
+    }
     
 }
