@@ -15,6 +15,9 @@ import { RoleNewComponent } from './roles/role/register/role-new.component';
 import { ClusterRoleBindingComponent } from './binding/cluster-role/cluster-role.component';
 import { RoleBindingComponent } from './binding/role/role.component';
 import { ClusterRoleBindingRegisterComponent } from './binding/cluster-role/register/register.component';
+import { RoleBindingRegisterComponent } from './binding/role/register/register.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   declarations: [
@@ -24,14 +27,16 @@ import { ClusterRoleBindingRegisterComponent } from './binding/cluster-role/regi
     RoleNewComponent,
     ClusterRoleBindingComponent,
     RoleBindingComponent,
-    ClusterRoleBindingRegisterComponent
+    ClusterRoleBindingRegisterComponent,
+    RoleBindingRegisterComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RbacRoutingModule,
     ModalModule.forRoot(),
-    TagInputModule
+    TagInputModule,
+    NgSelectModule
   ]
 })
 export class RbacModule { }

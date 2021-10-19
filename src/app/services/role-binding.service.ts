@@ -18,29 +18,45 @@ export class RoleBindingService {
 
   }
 
-  listClusterRolesBindings(): Observable<HttpResponse<RoleBindingList>> {
+  listRolesBindings(): Observable<HttpResponse<RoleBindingList>> {
 
     return this.http.get<RoleBindingList>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/rolebindings',
         {headers,observe: 'response'}
       );
   }
 
-  createClusterRoleBinding(crb:RoleBinding): Observable<HttpResponse<RoleBinding>> {
-    return this.http.post<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/rolebindings',
+
+  listRolesBindingsByNamespace(namespace: string): Observable<HttpResponse<RoleBindingList>> {
+
+    return this.http.get<RoleBindingList>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+ namespace + '/rolebindings',
+        {headers,observe: 'response'}
+      );
+  }
+
+  createRoleBinding(crb:RoleBinding,namespace: string): Observable<HttpResponse<RoleBinding>> {
+    return this.http.post<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+ namespace + '/rolebindings',
         crb,
         {headers,observe: 'response'}
       );
   }
 
-  updateClusterRoleBinding(name: string, crb:RoleBinding): Observable<HttpResponse<RoleBinding>> {
-    return this.http.put<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/rolebindings/'+name,
+  updateRoleBinding(name: string, crb:RoleBinding,namespace: string): Observable<HttpResponse<RoleBinding>> {
+    return this.http.put<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+ namespace + '/rolebindings/'+name,
         crb,
         {headers,observe: 'response'}
       );
   }
 
-  deleteClusterRoleBinding(name: string): Observable<HttpResponse<RoleBinding>> {
-    return this.http.delete<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/rolebindings/'+name,   
+  deleteRoleBinding(name: string,namespace: string): Observable<HttpResponse<RoleBinding>> {
+    return this.http.delete<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+ namespace + '/rolebindings/'+name,   
+        {headers,observe: 'response'}
+      );
+  }
+
+
+  findRoleBinding(name:string,namespace: string): Observable<HttpResponse<RoleBinding>> {
+
+    return this.http.get<RoleBinding>(API_BASE+'/apis/rbac.authorization.k8s.io/v1/namespaces/'+ namespace + '/rolebindings/'+name,
         {headers,observe: 'response'}
       );
   }
