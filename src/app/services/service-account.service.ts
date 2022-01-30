@@ -29,6 +29,13 @@ export class ServiceAccountService {
       );
   }
 
+
+  findServiceAccount(name:string , namespace: string): Observable<HttpResponse<ServiceAccount>> {
+    return this.http.get<ServiceAccount>(API_BASE+'/api/v1/namespaces/'+namespace+'/serviceaccounts/'+name,
+        {headers,observe: 'response'}
+      );
+  }
+
   deleteServiceAccount(name: string,namespace:string): Observable<HttpResponse<any>> {
     return this.http.delete<any>(API_BASE+'/api/v1/namespaces/'+namespace+'/serviceaccounts/'+name,
       {headers,observe: 'response'}
@@ -36,7 +43,7 @@ export class ServiceAccountService {
   }
 
   createServiceAccount(sa: ServiceAccount): Observable<HttpResponse<ServiceAccount>> {
-    return this.http.post<ServiceAccount>(API_BASE+'/api/v1/serviceaccounts',
+    return this.http.post<ServiceAccount>(API_BASE+'/api/v1/namespaces/'+sa.metadata.namespace+'/serviceaccounts',
         sa,
         {headers,observe: 'response'}
       );

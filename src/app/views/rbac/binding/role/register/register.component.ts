@@ -51,11 +51,14 @@ export class RoleBindingRegisterComponent implements OnInit {
   ngOnInit(): void {
 
     var rb = this.route.snapshot.queryParamMap.get('role-binding')
+    var ns = this.route.snapshot.queryParamMap.get('namespace')
     if (rb){
-      this.isEdit=true    
+      this.isEdit=true
+      this.listServiceAccountsByNamespace(ns)
+    }else{
+      this.listServiceAccounts()
     }
 
-    this.listServiceAccounts()
     this.listRole()
     this.listNamespaces()
     
@@ -116,6 +119,17 @@ export class RoleBindingRegisterComponent implements OnInit {
 
   private listServiceAccounts(){
     this.serviceAccService.listServiceAccount()
+      .subscribe(r=>{
+        if (r.ok){
+          this.serviceAccountList=of(r.body.items.map(sa=>{
+            return {"id":sa.metadata.name,"name":sa.metadata.name}
+          }));
+        }
+      })
+  }
+
+  private listServiceAccountsByNamespace(ns:string){
+    this.serviceAccService.listServiceAccountByNamespace(ns)
       .subscribe(r=>{
         if (r.ok){
           this.serviceAccountList=of(r.body.items.map(sa=>{
