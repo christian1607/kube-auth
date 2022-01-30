@@ -66,5 +66,12 @@ export const navItems: INavData[] = [
       }
     ]
       
+  },
+  {
+    
+    name: 'Service Accounts',
+    url: '/authentication/service-account',
+    icon: 'icon-star'
+      
   }
 ];

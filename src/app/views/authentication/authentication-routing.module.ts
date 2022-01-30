@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { RequestAccessComponent } from './request-access/request-access.component';
-import { EvaluateAccessComponent } from './evaluate-access/evaluate-access.component';
+import { RequestAccessComponent } from './x509/request-access/request-access.component';
+import { EvaluateAccessComponent } from './x509/evaluate-access/evaluate-access.component';
+import { ServiceAccountComponent } from './service-account/sa.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,23 @@ const routes: Routes = [
           }
           
         ]
+      },
+      {
+        path: 'service-account',
+        data: {
+          title: 'Service Accounts'
+        },
+        component: ServiceAccountComponent,
+        children: [
+          {
+            path: 'new',
+            component: RequestAccessComponent,
+            data: {
+              title: 'Create/Edit Service Account'
+            }
+          }
+          
+        ]
       }
       
     ]
@@ -44,4 +62,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class X509RoutingModule { }
+export class AuthenticationRoutingModule { }
