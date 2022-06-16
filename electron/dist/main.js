@@ -8,8 +8,8 @@ var url = require("url");
 var win;
 function createWindow() {
     win = new electron_1.BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 800,
         title: "Kube-Auth",
         icon: __dirname + "/../../dist/kube-auth/assets/kube-auth-only.icns"
     });
@@ -18,7 +18,7 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }));
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
     win.on('closed', function () {
         win = null;
     });

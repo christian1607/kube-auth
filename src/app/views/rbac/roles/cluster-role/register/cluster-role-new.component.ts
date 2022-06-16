@@ -48,7 +48,7 @@ export class ClusterRoleNewComponent implements OnInit {
 
 
     var groupVersions = Array<GroupVersion>();
-    await this.apiGroupService.listClusterRoles().subscribe( r=> {
+    await this.apiGroupService.listApis().subscribe( r=> {
         
       this.apiGroupList = r.body
 
@@ -145,29 +145,31 @@ export class ClusterRoleNewComponent implements OnInit {
 
   submitForm(form){
 
-    this.clusterRole.rules =[]
-    if (this.clusterRole.metadata.name){
-      this.apiGroupResources.forEach(apires=>{
-        var group = apires.group
-        apires.resources.forEach(res=>{
+    if(this.isEditClusterRole){
+      this.clusterRoleService.getClusterRole(this.route.snapshot.queryParamMap.get('clusterrole'))
+      .subscribe(r=>{
           
-          var pr = new PolicyRules();
-          pr.apiGroups.push(group=="v1"?"":group);
-          pr.resources.push(res.name);
-          
-          
-          res.actions.filter(a=> a.selected==true).map(a=>a.verb).forEach(a=>{
-            pr.verbs.push(a);
-          })
+        this.clusterRole = r.body
+        this.clusterRole.rules =[]
+          this.apiGroupResources.forEach(apires=>{
+            var group = apires.group
+            apires.resources.forEach(res=>{
+              
+              var pr = new PolicyRules();
+              pr.apiGroups.push(group=="v1"?"":group);
+              pr.resources.push(res.name);
+              
+              
+              res.actions.filter(a=> a.selected==true).map(a=>a.verb).forEach(a=>{
+                pr.verbs.push(a);
+              })
 
-          if (pr.verbs.length > 0){
-            this.clusterRole.rules.push(pr);
-          }
-        })
-      })
-  
-      
-      if(this.isEditClusterRole){
+              if (pr.verbs.length > 0){
+                this.clusterRole.rules.push(pr);
+              }
+            })
+          })
+    
         this.clusterRoleService.updateClusterRole(this.clusterRole.metadata.name,this.clusterRole).subscribe(r=>{
           if (r.ok){
             this.toastr.success('Cluster role '+this.clusterRole.metadata.name + ' was updated succesfully.')
@@ -175,7 +177,28 @@ export class ClusterRoleNewComponent implements OnInit {
             this.toastr.warning(r.status.toString())
           }
         });
-      }else{
+      })
+    }else{
+      if (this.clusterRole.metadata.name){
+        this.apiGroupResources.forEach(apires=>{
+          var group = apires.group
+          apires.resources.forEach(res=>{
+            
+            var pr = new PolicyRules();
+            pr.apiGroups.push(group=="v1"?"":group);
+            pr.resources.push(res.name);
+            
+            
+            res.actions.filter(a=> a.selected==true).map(a=>a.verb).forEach(a=>{
+              pr.verbs.push(a);
+            })
+
+            if (pr.verbs.length > 0){
+              this.clusterRole.rules.push(pr);
+            }
+          })
+        })
+  
         this.clusterRoleService.createClusterRole(this.clusterRole).subscribe(r=>{
           if (r.ok){
             this.toastr.success('Cluster role '+this.clusterRole.metadata.name + ' was created succesfully.')
@@ -183,10 +206,12 @@ export class ClusterRoleNewComponent implements OnInit {
             this.toastr.warning(r.status.toString())
           }
         });
+        
+      }else{
+        this.toastr.warning('A cluster name must be define.')
       }
-    }else{
-      this.toastr.warning('A cluster name must be define.')
-    }
+    } 
+    
   }
 
 }

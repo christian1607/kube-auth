@@ -1,0 +1,93 @@
+<div class="animated fadeIn">
+  <div class="row align-items-center">
+      <div class="col-xl-3">
+        <button type="button"  class="btn btn-block btn-success" (click)="goToCreate()">
+            <i class="icon-plus"></i> New  Service Account    
+        </button>
+      </div>
+
+      
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Service Accounts
+        </div>
+        <div class="card-body">
+         
+          <div class="row">
+            <div class="col-xl-2">Namespace:</div>
+            <div class="col-xl-2">
+              <select id="nsFilter" name="nsFilter" title="--namespace--" [(ngModel)]="filterNamespace" (change)="filterSaByNamespace()" class="form-control form-control-md">
+                <option value="">All</option>
+                <option *ngFor="let ns of namespaceList.items" [value]="ns.metadata.name">{{ns.metadata.name}}</option>          
+              </select>
+            </div>
+          </div>
+          <br/>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Namespace</th>
+                <th>Date registered</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cr of saList.items">
+                <td> {{ cr.metadata.name }}</td>
+                <td> {{ cr.metadata.namespace }}</td>
+                <td> {{ cr.metadata.creationTimestamp }}</td>
+                <td>            
+                  <button type="button" class="btn btn-sm btn-pill btn-success" (click)="goToEdit(cr.metadata.name,cr.metadata.namespace)"> 
+                    <i class="icon-pencil"></i> &nbsp; Edit &nbsp;&nbsp;
+                  </button>
+                  <button type="button" class="btn btn-sm btn-pill btn-danger" data-toggle="modal" (click)="openConfirmationModal(cr.metadata.name,cr.metadata.namespace)">
+                    <i class="icon-trash"></i>  &nbsp; Delete &nbsp;
+                  </button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+
+  <div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Confirmation</h4>
+          <button type="button" class="close" (click)="deleteModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure to delete? (this action may affect apps using this service account)</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="deleteModal.hide()">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="deleteServiceAccount()">Yes, I'm sure</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+</div>

@@ -35,7 +35,7 @@ export const routes: Routes = [
       },
       {
         path: 'authentication',
-        loadChildren: () => import('./views/authentication/x509/x509.module').then(m => m.X509Module)
+        loadChildren: () => import('./views/authentication/authentication.module').then(m => m.AuthenticationModule)
       },
       {
         path: 'dashboard',

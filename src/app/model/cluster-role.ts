@@ -9,7 +9,7 @@ export class ClusterRole {
     rules: PolicyRules[]
 
     constructor(){
-        this.apiVersion="v1"
+        this.apiVersion="rbac.authorization.k8s.io/v1"
         this.kind="ClusterRole"
         this.metadata=new Metadata();
         this.rules= Array<PolicyRules>();
