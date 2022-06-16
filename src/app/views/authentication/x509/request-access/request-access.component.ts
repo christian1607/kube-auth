@@ -30,8 +30,6 @@ export class RequestAccessComponent implements OnInit {
 
 
   async createPrivateKey(){
-
-   
   
   }
 
@@ -53,7 +51,6 @@ export class RequestAccessComponent implements OnInit {
       this.opensslcsrcommand="openssl req -new -key user-"+this.username+".key -out user-"+this.username+".csr -subj '/CN="+this.username+groupsCsr+"'" 
     }    
   }
-
 
   
   submitForm(){

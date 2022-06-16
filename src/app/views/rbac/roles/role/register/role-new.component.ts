@@ -58,7 +58,7 @@ export class RoleNewComponent implements OnInit {
 
 
     var groupVersions = Array<GroupVersion>();
-    await this.apiGroupService.listClusterRoles().subscribe( r=> {
+    await this.apiGroupService.listApis().subscribe( r=> {
         
       this.apiGroupList = r.body
 
@@ -70,15 +70,19 @@ export class RoleNewComponent implements OnInit {
 
       
       this.apiGroupService.listResourcesV1().subscribe(r=>{
-    
+        
         var apiGroupResource = new ApiGroupResource(r.body.groupVersion,r.body.resources)
+        
+        apiGroupResource.resources = apiGroupResource.resources.filter(r=>{return r.namespaced})
         apiGroupResource.resources.forEach(r=>{
-          r.actions = []
-          r.verbs.forEach(v=>{
-              r.actions.push(new ApiResourceAction(v,false))
-          })
+            r.actions = []
+            r.verbs.forEach(v=>{
+                r.actions.push(new ApiResourceAction(v,false))
+            })               
         })
-        this.apiGroupResources.push(apiGroupResource)
+        if (apiGroupResource.resources.length>0){
+          this.apiGroupResources.push(apiGroupResource)
+        }
 
       }, e=>{
         console.error("an error has ocurred while trying to fetch api resources v1",e)
@@ -89,13 +93,17 @@ export class RoleNewComponent implements OnInit {
         this.apiGroupService.listResources(gv.groupVersion).subscribe(r=>{
       
           var apiGroupResource = new ApiGroupResource(r.body.groupVersion,r.body.resources)
+          apiGroupResource.resources = apiGroupResource.resources.filter(r=>{return r.namespaced})
           apiGroupResource.resources.forEach(r=>{
             r.actions = []
             r.verbs.forEach(v=>{
                 r.actions.push(new ApiResourceAction(v,false))
             })
           })
-          this.apiGroupResources.push(apiGroupResource)
+          if (apiGroupResource.resources.length>0){
+            this.apiGroupResources.push(apiGroupResource)
+          }
+          
 
         }, e=>{
           console.error("an error has ocurred while trying to fetch api resources",e)
@@ -169,37 +177,61 @@ export class RoleNewComponent implements OnInit {
 
   submitForm(form){
 
-    this.role.rules =[]
-    if (this.role.metadata.name && this.role.metadata.namespace){
-      this.apiGroupResources.forEach(apires=>{
-        var group = apires.group
-        apires.resources.forEach(res=>{
-          
-          var pr = new PolicyRules();
-          pr.apiGroups.push(group=="v1"?"":group);
-          pr.resources.push(res.name);
-          
-          
-          res.actions.filter(a=> a.selected==true).map(a=>a.verb).forEach(a=>{
-            pr.verbs.push(a);
-          })
+    if(this.isEditRole){
+      this.roleService.getRole(this.route.snapshot.queryParamMap.get('namespace'),this.route.snapshot.queryParamMap.get('role'))
+      .subscribe(r=>{
+        
+        this.role = r.body
+        this.role.rules =[]
 
-          if (pr.verbs.length > 0){
-            this.role.rules.push(pr);
-          }
-        })
-      })
+        this.apiGroupResources.forEach(apires=>{
+          var group = apires.group
+          apires.resources.forEach(res=>{
+            
+            var pr = new PolicyRules();
+            pr.apiGroups.push(group=="v1"?"":group);
+            pr.resources.push(res.name);
+            
+            res.actions.filter(a=> a.selected==true).map(a=>a.verb).forEach(a=>{
+              pr.verbs.push(a);
+            })
   
+            if (pr.verbs.length > 0){
+              this.role.rules.push(pr);
+            }
+          })
+        })
       
-      if(this.isEditRole){
         this.roleService.updateRole(this.role.metadata.name,this.role.metadata.namespace,this.role).subscribe(r=>{
           if (r.ok){
             this.toastr.success('Role '+this.role.metadata.name + ' updated succesfully.')
           }else{
             this.toastr.warning(r.status.toString())
           }
-        });
-      }else{
+        });  
+      })
+    }else{
+      if (this.role.metadata.name && this.role.metadata.namespace){
+
+        this.role.rules =[]
+        this.apiGroupResources.forEach(apires=>{
+          var group = apires.group
+          apires.resources.forEach(res=>{
+            
+            var pr = new PolicyRules();
+            pr.apiGroups.push(group=="v1"?"":group);
+            pr.resources.push(res.name);
+            
+            res.actions.filter(a=> a.selected==true).map(a=>a.verb).forEach(a=>{
+              pr.verbs.push(a);
+            })
+  
+            if (pr.verbs.length > 0){
+              this.role.rules.push(pr);
+            }
+          })
+        })
+
         this.roleService.createRole(this.role.metadata.namespace,this.role).subscribe(r=>{
           if (r.ok){
             this.toastr.success('Role '+this.role.metadata.name + ' created succesfully.')
@@ -207,10 +239,12 @@ export class RoleNewComponent implements OnInit {
             this.toastr.warning(r.status.toString())
           }
         });
+      } else{
+        this.toastr.warning('Role name and namespace are required.')
       }
-    }else{
-      this.toastr.warning('Role name and namespace are required.')
     }
+   
+
   }
 
 }

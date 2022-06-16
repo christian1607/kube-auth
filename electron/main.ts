@@ -7,8 +7,8 @@ import * as url from 'url';
 let win: BrowserWindow;
 function createWindow() {
     win = new BrowserWindow({
-         width: 800, 
-         height: 600, 
+         width: 1200, 
+         height: 800, 
          title: "Kube-Auth",
          icon: __dirname +`/../../dist/kube-auth/assets/kube-auth-only.icns`
         });
@@ -21,7 +21,7 @@ function createWindow() {
         })
     );
             
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 
     win.on('closed', () => {
         win = null;

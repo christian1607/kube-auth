@@ -11,6 +11,9 @@ import { freeSet } from '@coreui/icons';
   providers: [IconSetService],
 })
 export class AppComponent implements OnInit {
+  
+  static apiServerUrl = ""
+  
   constructor(
     private router: Router,
     public iconSet: IconSetService
@@ -20,6 +23,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    
+    if (AppComponent.apiServerUrl==""){
+      this.router.navigate(["login"])
+    }
+
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
@@ -28,3 +37,4 @@ export class AppComponent implements OnInit {
     });
   }
 }
+

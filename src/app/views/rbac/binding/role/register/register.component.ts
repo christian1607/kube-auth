@@ -170,7 +170,6 @@ export class RoleBindingRegisterComponent implements OnInit {
       this.roleBinding.roleRef.apiGroup="rbac.authorization.k8s.io"
       this.roleBinding.roleRef.kind="Role"
       this.roleBinding.roleRef.name=this.role.metadata.name
-      this.roleBinding.metadata.namespace=this.filterNamespace
       
       console.log(this.serviceAccounts)
   
@@ -183,7 +182,7 @@ export class RoleBindingRegisterComponent implements OnInit {
       })
 
       this.serviceAccounts.forEach(sa=>{
-        this.roleBinding.subjects.push(new Subject(sa,"","ServiceAccount",this.filterNamespace))
+        this.roleBinding.subjects.push(new Subject(sa,"","ServiceAccount",this.roleBinding.roleRef.name=this.role.metadata.namespace))
       })
 
       if (this.isEdit){
@@ -199,6 +198,7 @@ export class RoleBindingRegisterComponent implements OnInit {
           this.toastr.error("Unexpected error ocurred.")
           })
       }else{
+        
         this.roleBindingService.createRoleBinding(this.roleBinding,this.roleBinding.metadata.namespace)
           .subscribe(r=>{
             if(r.ok ){
